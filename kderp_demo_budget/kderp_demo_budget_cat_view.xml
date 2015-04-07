@@ -42,6 +42,7 @@
 		<menuitem name="Demo Budget" id="kderp_demo_budget_menu_mainform" parent="kderp_demo_common.menu_demo_configulation" sequence="30"/>
 		<menuitem name="Demo Budget by Category" id="kderp_kderp_demo_budget_category_menu" parent="kderp_demo_budget_menu_mainform" sequence="20" action="action_kderp_demo_budget_cat"/>
 		
+		<!-- ke thua account_budget_post -->
 		<record model="ir.ui.view" id="kderp_demo_budget_inherit_form">
 			<field name="name">kderp.demo.budget.inherit.form</field>
 			<field name="model">account.budget.post</field>
