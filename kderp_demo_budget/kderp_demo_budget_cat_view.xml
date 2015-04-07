@@ -52,6 +52,17 @@
 				</field>
 			</field>
 		</record>
+		
+		<record model="ir.ui.view" id="kderp_demo_budget_inherit_tree">
+			<field name="name">kderp.demo.budget.inherit.tree</field>
+			<field name="model">account.budget.post</field>
+			<field name="inherit_id" ref="kderp_demo_account_budget_post_tree"/>
+			<field name="arch" type="xml">
+				<field name="name" position="after">
+					<field name="budget_categ_id"/>
+				</field>
+			</field>
+		</record>
     </data>
 </openerp>
 
