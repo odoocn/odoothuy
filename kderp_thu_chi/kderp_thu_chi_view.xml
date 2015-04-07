@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		<menuitem name="Kderp Thu Chi"
+            id="base.menu_kderp_thu_chi_root"
+            sequence="25"/>
+ 
+        <menuitem id="menu_kderp_thu_chi" name="Kderp Thu Chi"
+            parent="base.menu_kderp_thu_chi_root" sequence="1" />
+            
+		<record model="ir.ui.view" id="kderp_thu_chi_form">
+       		<field name="name">kderp.thu.chi.form</field>
+           	<field name="model">kderp.thu.chi</field>
+           	<field name="type">form</field>
+           	<field name="arch" type="xml">
+           		<form string= "KDERP Thu Chi">
+           			 <group colspan="2" col="2">
+           				<field name="ma_phieu"/>
+                    	<field name="ngay_lap_phieu"/>
+                   	 	<field name="so_tien"/>
+                   		<field name="ly_do"/>
+                    	<field name="nguoi_nop_tien"/>
+                    	<field name="nguoi_nhan_tien"/>
+           			</group>
+               	</form>
+           </field>
+        </record>
+         
+        <record model="ir.ui.view" id="kderp_thu_chi_tree">
+            <field name="name">kderp.thu.chi.tree</field>
+            <field name="model">kderp.thu.chi</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="KDERP Thu">
+                    <field name="ma_phieu"/>
+                    <field name="ngay_lap_phieu"/>
+                    <field name="so_tien"/>
+                    <field name="ly_do"/>
+                    <field name="nguoi_nop_tien"/>
+                    <field name="nguoi_nhan_tien"/>
+                </tree>
+            </field>
+        </record>
+        
+		<record model="ir.actions.act_window" id="action_kderp_thu_chi">
+			<field name="name">Kderp Thu Chi</field>
+			<field name="res_model">kderp.thu.chi</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		<menuitem name="Kderp Thu Chi" id="kderp_thu_chi_menu_mainform" parent="menu_kderp_thu_chi" sequence="30" action="action_kderp_thu_chi"/>
+    </data>
+</openerp>
+

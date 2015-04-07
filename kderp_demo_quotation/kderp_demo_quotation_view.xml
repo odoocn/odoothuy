@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>	
+            
+        <!-- Attachment Quotation -->
+        <record id="action_open_attachment_from_quotation" model="ir.actions.act_window">
+            <field name="name">Attachment</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">ir.attachment</field>
+            <field name="src_model">sale.order</field>
+            <field name="view_type">form</field>
+            <field name="context">{'res_model':'sale.order','res_id':active_id}</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('res_id','=',active_id),('res_model','=','sale.order')]</field>
+        </record>
+            
+		<record id="kderp_view_sale_quotation_tree" model="ir.ui.view">
+            <field name="name">kderp.view.sale.order.quotation.tree</field>
+            <field name="model">sale.order</field>
+            <field name="priority">1</field>
+            <field name="arch" type="xml">
+                <tree string="Quotation">
+                    <field name="name" string="No."/>
+                    <field name="dateofregistration" string="Date of Reg."/>
+                    <field name="state" string="Status"/>
+                    <field name="partner_id"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record id="kderp_view_sale_quotation_form" model="ir.ui.view">
+            <field name="name">kderp.view.sale.order.quotation.form</field>
+            <field name="model">sale.order</field>
+            <field name="priority">1</field>
+            <field name="arch" type="xml">
+                <form string="Sale Order">
+                <header>
+                	<button name="action_work_received" confirm="Are you sure you want to approve this quotation?" icon="gtk-execute" states="draft" string="Work Received" type="object"/>
+                    <button name="action_done_draft" icon="gtk-go-back" attrs="{'invisible': [ ('state','!=', 'done')]}"  string="Back" type="object"/>
+                    <button name="action_cancel" confirm="Are you sure you want to cancel this quotation?" icon="gtk-cancel" class="oe_cancel" attrs="{'invisible': [[ 'state','not in', ['draft','done']]]}" string="Failed" type="object"/>
+					<button name="action_cancel_draft" icon="gtk-convert" states="cancel" string="Revise" class="oe_cancel" type="object" />
+	            	<button name="%(action_open_attachment_from_quotation)d" icon="gtk-paste-v" string="Attachment" class="oe_cancel" type="action"/>
+	                <field name="state" widget="statusbar" statusbar_visible="draft,cancel,done" />
+                </header>
+					<sheet>
+                        <label for="name" string="Quotation No." class="oe_edit_only"/>
+						<h2><field name="name"/></h2>
+						<label for="dateofregistration" string="Registered on" class="oe_edit_only"/>
+						<h3><field name="dateofregistration" class="oe_inline"/></h3>
+						<group>
+							<div col="4" colspan="4">
+								<group string="Client Info." colspan="4" col="4">
+									<field name="partner_id" on_change="onchange_partner_id(partner_id)"/>
+									<field name="partner_address_id" />
+									<field name="partner_invoice_id"/>
+									<field name="completion_date"/>
+									<field name="contract_id"/>
+									<field name="completion_date_contract"/>
+								</group>
+							</div>
+								<group string="Quotation Info." colspan="4" col="4">
+									<field name="owner"/>
+									<field name="location"/>
+									<field name="project_name"/>
+									<field name="register_by"/>
+									<field name="est_e_j"/>
+									<field name="est_m_j"/>
+									<field name="est_e_v"/>
+									<field name="est_m_v"/>
+									<field name="prj_manager_e"/>
+									<field name="prj_manager_m"/>
+									<field name="site_manager_e"/>
+									<field name="site_manager_m"/>
+									<field name="description"/>
+									<field name="remarks"/>
+								</group>
+								<group string="Attachment Info." col="8" colspan="8">
+									<field name="q_attached"/>
+									<field name="q_attached_be"/>
+									<field name="q_attached_bm"/>
+									<field name="q_attached_qcombine"/>
+								</group>
+								<group string="Submit Info." colspan="4" col="4">
+									<field name="quotation_type"/>
+									<field name="date_order"/>
+
+									<field name="quotation_submit_line" nolabel="1" string="Detail of Submission" colspan="4">
+										<tree string="Sales Order Lines" editable="bottom">     
+		                                    <field name="currency_id"/>
+		                                    <field name="amount"/>
+		                                    <field name="tax_id" widget="many2many_tags" context="{'res_model':['kderp.demo.sale.order.submit.line'],'res_id':[active_id],'type':'issued','res_name':parent.name}">
+		                        				<tree>
+		                        					<field name="name"/>
+		                        				</tree>
+		                        			</field>
+		                        			<field name="tax_amount"/>
+		          							<field name="subtotal"/>
+		          							<field name="name"/>
+		                                   </tree>
+									</field>
+							 	</group>
+								<group string="Job Info." col="4" colspan="4">
+									<group colspan="2" col="2">
+										<separator string="Electrical Breakdown" colspan="4"/>
+										<field col="4" colspan="4" mode="tree" name="sale_order_line" nolabel="1">
+				                        	<tree editable="bottom">
+				                        		<field name="currency_id"/>
+				                        		<field name="price_unit"/>
+				                        		<field name="discount"/>
+				                        		<field name="name"/>
+											</tree>
+			                        	</field>
+				                    </group>
+		                        	<group colspan="2" col="2">
+		                        		<separator string="Mechanical Breakdown" colspan="4"/>
+		                        		<field colspan="4" mode="tree" name="sale_order_line_m" nolabel="1">
+			                        		<tree editable="bottom">
+			                        			<field name="currency_id"/>
+			                        			<field name="price_unit"/>
+			                        			<field name="discount"/>
+			                        			<field name="name"/>
+											</tree>
+		                        		</field>
+
+		                        	</group>
+		                        </group>
+                        		<group >
+		                        	<field name="job_e_id" />
+			                       	<field name="q_budget_no_e"/>                 		
+			                       	<field name="q_prj_budget_amount_e"/>
+				                   	<field name="q_exrate_e"/>
+				                   	<field name="budget_state_e"/>
+				                   	<field name="temp_percentage_e"/>
+				                </group>
+				                <group >
+				                	<field name="job_m_id" />
+			                        <field name="q_budget_no_m"/>                 		
+			                        <field name="q_prj_budget_amount_m"/>
+				                    <field name="q_exrate_m" col="1"/>
+				                    <field name="budget_state_m" col="1"/>
+				                    <field name="temp_percentage_m"/>
+				                </group>
+				                <group col="4" colspan="4">
+                       				<group string="Working Budget" colspan="2" col="2">
+                       					<group col="4">
+		                       				<field name="q_attached_je" />
+						                    <field name="q_attached_jm"/>                 		
+						                    <field name="q_attached_jcombine"/>
+						                    <field name="quotation_job_budget_na"/>                 		
+						                    <field name="total_working_budget"/>
+					                    </group>
+                       				</group>	
+                      				<group string="Approval" colspan="2" col="2">
+	                      				<field name="summary_quotation_ids" colspan="4" mode="tree" nolabel="1">
+	                       					<tree>
+	                       						<field name="currency_id"/>
+	                       						<field name="amount"/>
+	                       					</tree>
+	                       				</field>
+	                       			</group>                        		
+                      			</group>
+						</group>
+					</sheet>
+                </form>
+            </field>
+        </record>
+        
+		<record model="ir.actions.act_window" id="action_kderp_demo_quotation">
+			<field name="name">Demo Quotation</field>
+			<field name="res_model">sale.order</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		 
+		<menuitem name="Demo Quotation" id="kderp_demo_quotation_menu_mainform" parent="menu_kderp_demo_quotation" sequence="50" action="action_kderp_demo_quotation"/>
+		<menuitem id="menu_kderp_demo_quotation" name="Demo Quotation" parent="kderp_demo_base.menu_kderp_demo_project_root" sequence="20"/>
+		
+        <record id="seq_type_kderp_hanoi_quotation" model="ir.sequence.type"> 
+  			<field name="name">KDERP Hanoi Quotation</field> 
+  			<field name="code">kderp.hanoi.quotation</field> 
+		</record> 
+		
+		<record id="seq_kderp_note_book" model="ir.sequence"> 
+    		<field name="name">KDERP Hanoi Quotaion</field> 
+    		<field name="code">kderp.hanoi.quotation</field> 
+    		<field name="prefix">QH</field> 
+    		<field name="padding">4</field> 
+    		<field name="suffix">01</field>
+		</record>
+
+    </data>
+</openerp>
+

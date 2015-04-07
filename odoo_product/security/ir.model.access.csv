@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_kdodoo_product_everyone,kdodoo.product.read,model_kdodoo_website_product,base.group_public,1,1,0,0
+access_kdodoo_product_full,kdodoo.product.full,model_kdodoo_website_product,group_kdodoo_odoo_product_full,1,1,1,1

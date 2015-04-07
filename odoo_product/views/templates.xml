@@ -1,0 +1,71 @@
+<openerp>
+    <data>
+		<template id="flag_compare">							
+			<div t-attf-class="btn-group pull-right js_flag_compare #{object.flag_compare and 'css_published' or 'css_unpublished'}" t-att-data-id="object.id" t-att-data-object="object._name" t-att-data-controller="flag_compare_controller">
+	            <button t-attf-class="btn btn-sm btn-#{object.flag_compare and 'success' or 'danger'} js_compare_btn">
+	                <span class="css_publish">Add to Compare</span>
+	                <span class="css_unpublish">Remove from Compare</span>
+	            </button>
+	        </div>			
+		</template>
+		
+		<template id="odoo_product.index" name="index">
+		    <t t-call="website.layout">
+		    <t t-set="head">
+            	<link rel='stylesheet' href='odoo_product/static/src/css/odoo_product.css' t-ignore="true"/>
+		    	<script type="text/javascript" src="odoo_product/static/src/js/odoo_product.js"></script>	
+        	</t>	
+		        <div id="wrap">
+		            <div class="oe_structure"/>
+		            <div class="oe_structure">		            	
+		                <div class="container">
+		                    <h1>List of Products</h1>
+		                    <ul>                    	
+		                    	<div class='oe_compare'>		            		
+		            				Compare Specification()		            		
+		            			</div>
+		                        <li t-foreach="pros" t-as="pro">		                        		                        	
+		                        	<t t-call="odoo_product.flag_compare"><t t-set="object" t-value="pro"/></t>
+		                        	<t t-call="website.publish_management"><t t-set="object" t-value="pro"/></t>		       
+		                            <a t-att-href="url_for('/pros/%s/' % pro.id)">                            	
+		                            	<div class="img-rounded oe_left oe_avatar">
+		                					<img t-att-src="pro.img('image_small')" class="img-rounded oe_left oe_avatar"/>
+		                				</div>                            	
+		                                <t t-esc="pro.name"/>
+		                            </a>
+		                        </li>
+		                    </ul>
+		                    
+		                </div>
+		            </div>
+		            <div class="oe_structure"/>
+		        </div>
+		    </t>
+		</template>
+		
+		<template id="odoo_product.pro" name="Detail of Products">
+		    <t t-call="website.layout">
+		        <div id="wrap">
+		            <div class="oe_structure"/>
+		            <div class="oe_structure">
+		                <div class="container">
+		                	<img t-att-src="pro.img('image_small')" class="oe_avatar img-rounded"/>
+		                    <h2>Product name</h2>
+		                    <h1 t-field="pro.name"/>
+		                    <h2>Product Code</h2>
+		                    <div t-field="pro.default_code"/>
+		                </div>
+		            </div>
+		            <div class="oe_structure"/>
+		        </div>
+		    </t>
+		</template>
+<!-- 
+<template id="Testing" inherit_id="website_event.index">
+    <xpath expr="//ol[hasclass('breadcrumb')]" position="replace"/>
+    <xpath expr="//ul[hasclass('media-list')]/li/div/div[1]" position="replace"/>
+    <xpath expr="//ul[hasclass('media-list')]/li/div/div[hasclass('text-muted')]" position="replace"/>
+</template>
+ -->
+    </data>
+</openerp>

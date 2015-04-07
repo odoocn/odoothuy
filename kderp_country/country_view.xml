@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+
+		<menuitem name="Kderp Country"
+            id="base.menu_kderp_country_root"
+            sequence="30"/>
+ 
+        <menuitem id="menu_kderp_country" name="Kderp Country"
+            parent="base.menu_kderp_country_root" sequence="30" />
+            
+         <record id="view_country_tree" model="ir.ui.view">
+            <field name="name">res.country.tree</field>
+            <field name="model">res.country</field>
+            <field name="priority">1</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Country">
+                    <field name="name"/>
+                    <field name="code"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_country_form" model="ir.ui.view">
+            <field name="name">res.country.form</field>
+            <field name="model">res.country</field>
+            <field name="priority">1</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Country">
+                	<group col = "4">
+                    	<field name="name" select="1"/>
+                    	<field name="code" select="1"/>
+                    	<field name="des"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+        
+		<record model="ir.actions.act_window" id="action_kderp_country">
+			<field name="name">Kderp Country</field>
+			<field name="res_model">res.country</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		<menuitem name="Kderp Country" id="kderp_country_menu_mainform" parent="menu_kderp_country" sequence="30" action="action_kderp_country"/>
+
+    </data>
+</openerp>
+

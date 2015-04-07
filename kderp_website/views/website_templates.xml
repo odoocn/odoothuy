@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="contactus" name="Contact KDVN" inherit_id="website.contactus">
+            <xpath expr="//div[p]" position="replace">
+                <div>
+	            	<p>Contact KINDEN VIETNAM for further information.</p>
+				    <p>We'll do our best to get back to you as soon as possible.</p>
+			    </div>
+		    </xpath>
+		</template>
+    </data>
+</openerp>

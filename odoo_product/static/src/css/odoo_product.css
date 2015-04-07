@@ -1,0 +1,4 @@
+[flag-compare='off'] > *:not(.css_options) {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
+  opacity: 0.5;
+}

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		<menuitem name="Kderp Demo"
+            id="base.menu_kderp_demo_root"
+            sequence="20"/>
+ 
+        <menuitem id="menu_kderp_demo" name="Kderp Demo"
+            parent="base.menu_kderp_demo_root" sequence="1" />
+            
+		<record model="ir.ui.view" id="kderp_demo_form">
+       		<field name="name">kderp.demo.form</field>
+           	<field name="model">kderp.demo</field>
+           	<field name="type">form</field>
+           	<field name="arch" type="xml">
+           		<form string= "KDERP Demo">
+           			<group colspan="4" col="4">
+           				<field name="code"/>
+                    	<field name="name"/>
+           			</group>
+               	</form>
+           </field>
+        </record>
+        
+        <record model="ir.ui.view" id="kderp_demo_tree">
+            <field name="name">kderp.demo.tree</field>
+            <field name="model">kderp.demo</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="KDERP Demo">
+                    <field name="code"/>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        
+		<record model="ir.actions.act_window" id="action_kderp_demo">
+			<field name="name">Kdep Demo</field>
+			<field name="res_model">kderp.demo</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		<!--  -->
+		<menuitem name="Kderp Demo" id="kderp_demo_menu_mainform" parent="menu_kderp_demo" sequence="30" action="action_kderp_demo"/>
+    </data>
+</openerp>
+

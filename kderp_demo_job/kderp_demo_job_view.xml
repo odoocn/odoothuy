@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+
+		<record model="ir.ui.view" id="kderp_demo_job_form">
+       		<field name="name">kderp.demo.job.form</field>
+           	<field name="model">account.analytic.account</field>
+           	<field name="priority" eval="5"/>
+           	<field name="type">form</field>
+           	<field name="arch" type="xml">
+           		<form string= "KDERP Demo Job">
+           			<header>
+						<field name="state_bar" widget="statusbar" statusbar_visible="doing,done,closed,cancel"/>
+	                </header>
+           			<sheet>
+	                    <h1><field name="complete_name"/></h1>
+	                    <h3><field name="code" class="oe_inline oe_edit_only" placeholder="Job Number"/></h3>
+	                    <h3><field name="name"  class="oe_edit_only" placeholder="Name (Ex. New Factory for Canon Project)"/></h3>
+	           			<group colspan="4" col="4">
+		           			<group colspan="2" col="2">
+		                    	<field name="job_type"/>
+		                    	<field name="state"/>
+		                    	<field name="process_status"/>
+		                    	<field name="description"/>
+		                    </group>
+		                    <group colspan="2" col="2">
+		                    	<field name="partner_id"/>
+		                    	<field name="location_id"/>
+		                    </group>
+		                    <group colspan="2" col="2">
+		                    	<field name="registration_date"/>
+		                    	<field name="date_start"/>
+		                    </group>
+		                    <group colspan="2" col="2">
+		                    	<field name="date"/>
+		                    	<field name="completion_date"/>
+		                    	<field name="actual_completion_date"/>
+		                    </group>
+							<group colspan="2" col="2">
+								<field name="general_project_manager_id"/>
+								<field name="user_id" string='P.M.'/>
+								<field name="manager_id" string='S.M.'/>
+							</group>
+							<group colspan="2" col="2">
+								<field name="project_manager_ref" string='P.M.Ref.'/>
+								<field name="area_site_manager_id" string='A.S.M.'/>
+								<field name="remark"/>
+							</group>
+	           			</group>
+	           			<group  colspan="4" col="4">
+	           				<group colspan="2" col="2">
+								<field col="4" colspan="4" mode="tree" name="demo_project_cur_ids" nolabel="1">
+		                        	<tree editable="bottom">
+		                        		<field name="name"/>
+		                        		<field name="rate"/>
+		                        		<field name="rounding"/>
+		                        		<field name="default_curr"/>
+		                        		<field name="account_analytic_id"/>
+									</tree>
+	                        	</field>
+							</group>
+							<group colspan="2" col="2">
+								<field name="job_currency"/>
+							</group>
+	           			</group>
+						<notebook>
+							<page string="Quotation &amp; Contract">
+								<separator colspan="4" string="Quotations"/>
+								<field name="quotation_lists"/>
+								<separator colspan="4" string="Contract"/>
+								<field name="contract_lists"/>
+							</page>
+						</notebook>
+						
+           			</sheet>
+               	</form>
+           </field>
+        </record>
+        
+        <record model="ir.ui.view" id="kderp_demo_job_tree">
+            <field name="name">kderp.demo.job.tree</field>
+            <field name="model">account.analytic.account</field>
+            <field name="priority" eval="5"/>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="KDERP Demo Job">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="job_type"/>
+                    <field name="state"/>
+                    <field name="process_status"/>
+                </tree>
+            </field>
+        </record>
+        
+		<record model="ir.actions.act_window" id="action_kderp_demo_job">
+			<field name="name">Demo Job</field>
+			<field name="res_model">account.analytic.account</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		<menuitem name="Demo Job" id="kderp_demo_job_menu_mainform" parent="kderp_demo_common.menu_demo_job" sequence="25" action="action_kderp_demo_job"/>
+ 
+    </data>
+</openerp>
+

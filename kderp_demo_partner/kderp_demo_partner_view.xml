@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>    
+ 
+		<record model="ir.ui.view" id="kderp_demo_partner_form">
+       		<field name="name">kderp.demo.partner.form</field>
+           	<field name="model">res.partner</field>
+           	<field name="type">form</field>
+           	<field name="arch" type="xml">
+           		<form string= "Demo Partner">
+           			<group colspan="4" col="4">
+           				<field name="code"/>
+           			</group>
+               	</form>
+           </field>
+        </record>
+         
+        <record model="ir.ui.view" id="kderp_demo_partner_tree">
+            <field name="name">kderp.demo.partner.tree</field>
+            <field name="model">res.partner</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Demo Partner">
+                    <field name="code"/>
+                </tree>
+            </field>
+        </record>
+         
+		<record model="ir.actions.act_window" id="action_kderp_demo_partner">
+			<field name="name">Demo Partner</field>
+			<field name="res_model">res.partner</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		
+		<menuitem name="Demo Partner" id="kderp_demo_partner_menu_mainform" parent="menu_kderp_demo_partner" sequence="30" action="action_kderp_demo_partner"/>
+		<menuitem id="menu_kderp_demo_partner" name="Demo Partner" parent="base.menu_kderp_demo_project_root" sequence="15"/>
+
+    </data>
+</openerp>
+
+

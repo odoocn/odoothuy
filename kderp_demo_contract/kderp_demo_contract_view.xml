@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data> 
+
+		<record model="ir.ui.view" id="kderp_demo_contract_form">
+       		<field name="name">kderp.demo.contract.form</field>
+           	<field name="model">demo.contract</field>
+           	<field name="type">form</field>
+           	<field name="arch" type="xml">
+           		<form string= "Demo contract">
+           			<sheet>
+                        <label for="code" class="oe_edit_only"/>
+	                    <h1><field name="code"/></h1>
+	                    <label for="name" class="oe_edit_only"/>
+	                    <h2><field name="name"/></h2>
+	           			<group colspan="4" col="4">
+	           				<group col="2" colspan="2">
+		           				<field name="date"/>
+		           				<field name="project_name"/>
+		           				<field name="contract_ref"/>
+		           				<field name="client_representative_name"/>
+	           				</group>
+	           				<group col="2" colspan="2">
+		           				<field name="owner"/>
+		           				<field name="partner_id" on_change="onchange_partner_id(partner_id)"/>
+		           				
+		           				<field name="client_id"/>
+		           				<field name="invoice_id"/>
+		           				<field name="location_id"/> 
+		           			</group>
+		           			<group col="4" colspan="2" >          			
+		           				<field name="registration_date"/>
+		           				<field name="started_date"/>
+		           				<field name="completion_date"/>
+		           				<field name="closed_date"/>
+		           				<field name="outstanding"/>
+		           			</group>
+		           			<group colspan="2">
+		           				<field name="attached_contract_sent"/>
+		           				<field name="attached_contract_received"/>
+		           				<field name="attached_approved_quotation"/>
+		           			</group >
+		           		</group>
+	           			<group col="4" conspan="4">
+		           			<group string='Payment Terms' colspan="2">
+								<field name="demo_payment_term_ids" nolabel="1" mode='tree' options="{'always_reload':True}" context="{'id':active_id,'term_lines':demo_payment_term_ids}">
+									<tree editable="top" string='Payment Term' mode='tree'>
+					                    <field name="name"/>
+					                    <field name="type"/>
+					                    <field name="value_amount" string="%%" help=""/>
+					                    <field name="due_date"/>
+					                    <field name="tax_include" string="VAT Incl."/>
+					                    <field name="sequence"/>
+					                </tree>
+                				</field>
+							</group>
+							<group string='Currency System' colspan="2">
+								<field name="demo_contract_cur_ids" nolabel="1" mode='tree' options="{'always_reload':True}" context="{'id':active_id,'term_lines':demo_contract_cur_ids}">
+									<tree editable="top" string='Currency System' mode='tree'>
+					                    <field name="name"/>
+					                    <field name="rate"/>
+					                    <field name="rounding"/>
+					                    <field name="default_curr"/>
+					                </tree>
+                				</field>
+							</group>
+						</group> 
+	           			
+           				<group string='Contract Amount Info.'>
+							<field name="demo_contract_summary_cur_ids" nolabel="1" mode='tree' options="{'always_reload':True}" context="{'id':active_id,'term_lines' : demo_contract_summary_cur_ids }">
+								<tree editable="top" string='Currency System' mode='tree'>
+				                    <field name="name"/>
+				                    <field name="rate"/>
+				                    <field name="rounding"/>
+				                    <field name="default_curr"/>
+				                </tree>
+               				</field>
+               			</group>
+           			</sheet>
+               	</form>
+           </field>
+        </record>
+        
+        <record model="ir.ui.view" id="kderp_demo_contract_tree">
+            <field name="name">kderp.demo.contract.tree</field>
+            <field name="model">demo.contract</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Demo contract">
+                    <field name="code"/>
+                    <field name="name"/>
+         			<field name="date"/>
+         			<field name="project_name"/>
+                </tree>
+            </field>
+        </record>
+		
+		<record model="ir.actions.act_window" id="action_demo_contract">
+			<field name="name">Demo Contract</field>
+			<field name="res_model">demo.contract</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		<menuitem name="Demo Contract" id="demo_contract_menu_mainform" parent="menu_demo_contract" sequence="35" action="action_demo_contract"/>
+		<menuitem id="menu_demo_contract" name="Demo Contract" parent="kderp_demo_base.menu_kderp_demo_project_root" sequence="25" />
+
+    </data>
+</openerp>
+
+

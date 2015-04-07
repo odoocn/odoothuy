@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		<menuitem name="Demo Project" id="kderp_demo_base.menu_kderp_demo_project_root" sequence="1"/>
+    </data>
+</openerp>
+

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+	<!-- Odoo Product Tree, Form, Windows Action and Menu Item -->
+	<!-- Odoo Product Tree View -->
+	<record model='ir.ui.view' id='kdodoo_product_tree'>
+		<field name='name'>kdodoo.product.tree</field>
+		<field name='model'>kdodoo.website.product</field>
+		<field name='arch' type='xml'>
+			<tree string='Odoo Product'>
+				<field name='default_code'/>
+				<field name='name'/>
+				<field name='website_published'/>
+				<field name='flag_compare'/>
+			</tree>
+		</field>
+	</record>
+	
+	<!-- Odoo Product Form View -->
+	<record model='ir.ui.view' id='kdodoo_product_form'>
+		<field name='name'>kdodoo.product.form</field>
+		<field name='model'>kdodoo.website.product</field>
+		<field name='arch' type='xml'>
+			<form string='Odoo Product' version="7.0">
+				<sheet>
+					<group colspan="4" col="4">
+						<field name="image_medium" widget='image' class="oe_left oe_avatar" nolabel="1"/>
+						<group colspan="2" col="4">
+							<field name='default_code'/>
+							<field name='name'/>
+							<field name='website_published'/>
+							<field name='flag_compare'/>
+						</group>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+	
+	<!-- Windows Action -->
+	<record model='ir.actions.act_window' id='kdodoo_action_odoo_product'>
+		<field name='name'>Odoo Product</field>
+		<field name='type'>ir.actions.act_window</field>
+		<field name='res_model'>kdodoo.website.product</field>
+		<field name='view_type'>form</field>
+		<field name='view_mode'>tree,form</field>
+	</record>
+	
+	<!-- MenuItems -->
+	<menuitem id='odoo_menu_odoo_product_main' name='Odoo Products' sequence='50'/>
+	<menuitem id='odoo_menu_odoo_product_sub' name='Odoo Products' parent='odoo_menu_odoo_product_main' sequence='5'/>
+	<menuitem id='odoo_menu_odoo_product'
+			action='kdodoo_action_odoo_product'
+			parent='odoo_menu_odoo_product_sub'/>
+				
+	
+</data>
+</openerp>
