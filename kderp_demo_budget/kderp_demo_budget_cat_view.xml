@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
 	<data>
-           
+        <menuitem name="Demo Budget" id="kderp_demo_budget_menu_mainform" parent="kderp_demo_common.menu_demo_configulation" sequence="30"/>
+         
 		<record model="ir.ui.view" id="kderp_demo_budget_cat_form">
        		<field name="name">kderp.demo.budget.cat.form</field>
            	<field name="model">kderp.demo.budget.category</field>
@@ -20,10 +21,11 @@
            </field>
         </record>
         
-        <record model="ir.ui.view" id="kderp_demo_budget_cat_tree">
-            <field name="name">kderp.demo.budget.tree</field>
+        <record model="ir.ui.view" id="kderp_demo_budget_cat_list">
+            <field name="name">kderp.demo.budget.cat.list</field>
             <field name="model">kderp.demo.budget.category</field>
             <field name="type">tree</field>
+            <field name="priority">1</field>
             <field name="arch" type="xml">
                 <tree string="Demo Budget Category">
                 	<field name="complete_name"/>
@@ -31,16 +33,58 @@
             </field>
         </record>
         
-		<record model="ir.actions.act_window" id="action_kderp_demo_budget_cat">
-			<field name="name">Demo Budget Category</field>
-			<field name="res_model">kderp.demo.budget.category</field>
-			<field name="view_type">form</field>
-			<field name="view_mode">tree,form</field>
-		</record>
-		
-		<menuitem name="Demo Budget" id="kderp_demo_budget_menu_mainform" parent="kderp_demo_common.menu_demo_configulation" sequence="30"/>
-		<menuitem name="Demo Budget by Category" id="kderp_kderp_demo_budget_category_menu" parent="kderp_demo_budget_menu_mainform" sequence="20" action="action_kderp_demo_budget_cat"/>
-		
+        <record id="kderp_demo_budget_cat_tree" model="ir.ui.view">
+            <field name="name">kderp.demo.budget.cat.tree</field>
+            <field name="model">kderp.demo.budget.category</field>
+            <field name="type">tree</field>
+            <field name="field_parent">child_id</field>
+            <field name="arch" type="xml">
+                <tree string="Budget Categories">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- ========================= -->
+		<record id="budget_category_action" model="ir.actions.act_window">
+            <field name="name">Budget by Category</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">kderp.demo.budget.category</field>
+            <field name="domain">[('parent_id','=',False)]</field>
+            <field name="view_type">tree</field>
+            <field name="view_id" ref="kderp_demo_budget_cat_tree"/>
+        </record>
+        <menuitem action="budget_category_action" id="menu_budget_category_action" parent="kderp_demo_budget_menu_mainform" sequence="1"/>
+
+        <record id="budget_category_action_form" model="ir.actions.act_window">
+            <field name="name">Budget Categories</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">kderp.demo.budget.category</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="kderp_demo_budget_cat_list"/>
+        </record>
+        <menuitem action="budget_category_action_form" id="menu_budget_category_action_form" parent="menu_budget_category_action" sequence="1"/>
+
+		 
+        <record id="budget_normal_action_tree" model="ir.actions.act_window">
+            <field name="name">Budgets</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.budget.post</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('budget_categ_id','child_of',[active_id])]</field>
+            <field name="context">{'budget_categ_id':active_id}</field>
+        </record>
+
+
+        <record id="ir_budget_category_open" model="ir.values">
+            <field eval="'tree_but_open'" name="key2"/>
+            <field eval="'kderp.demo.budget.category'" name="model"/>
+            <field name="name">Budgets by Categories</field>
+            <field eval="'ir.actions.act_window,%d'%budget_normal_action_tree" name="value"/>
+            <field eval="True" name="object"/>
+        </record>
+		 
 		<!-- ke thua account_budget_post -->
 		<record model="ir.ui.view" id="kderp_demo_budget_inherit_form">
 			<field name="name">kderp.demo.budget.inherit.form</field>
