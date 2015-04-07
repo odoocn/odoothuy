@@ -26,8 +26,7 @@
             <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Demo Budget Category">
-                    <field name="cat_code"/>
-                    <field name="name"/>
+                	<field name="complete_name"/>
                 </tree>
             </field>
         </record>
