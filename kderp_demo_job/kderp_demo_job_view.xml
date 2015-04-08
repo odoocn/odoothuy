@@ -70,8 +70,15 @@
 								<separator colspan="4" string="Contract"/>
 								<field name="contract_lists"/>
 							</page>
+							<page string='Budget'>
+		            			<field name='kderp_budget_data_line' limit="15">
+		            				<tree editable='top' string="Budget Data">
+		           						<field name='budget_id'/>
+		           						<field name='planned_amount' sum='Sub-Total'/>
+		            				</tree>
+		            			</field>
+		            		</page>
 						</notebook>
-						
            			</sheet>
                	</form>
            </field>
