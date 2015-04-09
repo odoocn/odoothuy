@@ -55,7 +55,6 @@
 		                        		<field name="rate"/>
 		                        		<field name="rounding"/>
 		                        		<field name="default_curr"/>
-		                        		<field name="account_analytic_id"/>
 									</tree>
 	                        	</field>
 							</group>

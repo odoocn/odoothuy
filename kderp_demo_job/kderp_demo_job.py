@@ -8,6 +8,13 @@ class account_analytic_account(osv.osv):
     
     _rec_name = 'complete_name'
     
+    def create(self, cr, uid, vals, context=None):
+        new_job_id=super(account_analytic_account, self).create(cr, uid, vals, context=context)
+        kjc=self.pool.get('kderp.demo.project.cur')
+        new_id=kjc.create_currency(cr, uid, new_job_id, context)
+        self.pool.get('ir.rule').clear_cache(cr, uid)
+        return new_job_id
+        
     def _get_state(self, cr, uid, ids, name, args, context=None):
         res={}
         for prj in self.browse(cr, uid, ids, context):

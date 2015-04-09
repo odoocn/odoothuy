@@ -23,6 +23,22 @@ from openerp.osv import fields, osv
 class kderp_demo_project_cur(osv.osv):
     _name = 'kderp.demo.project.cur'
     _description = 'Job Currency'
+    _order = 'default_curr desc'
+    
+    def create_currency(self, cr, uid, job_id, context={}):
+        if not context: context={}
+        curr_obj=self.pool.get('res.currency')
+        currency_ids = curr_obj.search(cr, uid, [('id','>',0)])
+        new_id = False
+        new_ids=[]
+        for curr in curr_obj.browse(cr, uid, currency_ids):
+            if curr.name == 'USD':
+                new_id = self.create(cr, uid, {'name':curr.id,'rate':curr.rate,'account_analytic_id':job_id,'default_curr':False,'rounding':curr.rounding})
+                new_ids.append(new_id)
+            elif curr.name == 'VND':
+                new_id = self.create(cr, uid, {'name':curr.id,'rate':curr.rate,'account_analytic_id':job_id,'default_curr':True,'rounding':curr.rounding})
+                new_ids.append(new_id)
+        return new_ids
     
     _columns = {
                 'name': fields.many2one('res.currency','Curr. Name'),
