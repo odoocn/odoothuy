@@ -104,7 +104,18 @@ class account_analytic_account(osv.osv):
                 tmp_list=list(eval(tmp_list.strip().replace(' ',',').replace(' ','')))
             res[job_id]=tmp_list
         return res
-    
+    #=============================================
+    def _get_summary_amount(self, cr, uid, ids, name, args, context):
+        res={}
+        kjc=self.pool.get('kderp.demo.project.cur')
+        cur_obj=self.pool.get('res.currency')
+        
+        for kp in self.browse(cr, uid, ids):
+            job_currency=kp.job_currency
+            if not job_currency:
+                res[kp.id]={'job_amount':00.0}
+        return res
+    #==================================================
     def _get_job_budget_line(self, cr, uid, ids, context=None):
         result = []
         for kbd in self.pool.get('kderp.demo.budget.data').browse(cr, uid, ids, context=context):
@@ -165,10 +176,13 @@ class account_analytic_account(osv.osv):
                 'area_site_manager_id':fields.many2one("res.users",'A.S.M.',select=1),
                 'remark':fields.char("Remark"),
                 'demo_project_cur_ids':fields.one2many('kderp.demo.project.cur','account_analytic_id','Job Currency'),
+                #Job Total
                 'job_currency':fields.function(_get_job_currency,string='Cur.',type='many2one',method=True,relation='res.currency',
                                                store={
                                                       'kderp.demo.project.cur':(_get_job_to_job_cur, None, 10),
                                                     }),
+                'job_amount':fields.function(_get_summary_amount, type='float', string='Job Amount',method=True,
+                                             ),
                 #quotation and contract
                 'quotation_lists':fields.function(_get_quotation_lists, relation='sale.order',type='one2many',string='Quotations List',method=True),
                 'contract_lists':fields.function(_get_contract_lists, relation='demo.contract',type='one2many',string='Contract List',method=True),

@@ -60,6 +60,7 @@
 							</group>
 							<group colspan="2" col="2">
 								<field name="job_currency"/>
+								<field name="job_amount"/>
 							</group>
 	           			</group>
 						<notebook>
