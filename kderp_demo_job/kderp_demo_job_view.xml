@@ -64,11 +64,8 @@
 							</group>
 	           			</group>
 						<notebook>
-							<page string="Quotation &amp; Contract">
-								<separator colspan="4" string="Quotations"/>
-								<field name="quotation_lists"/>
-								<separator colspan="4" string="Contract"/>
-								<field name="contract_lists"/>
+							<page string="Job Info.">
+								<field name="total_budget_amount"/>
 							</page>
 							<page string='Budget'>
 		            			<field name='kderp_budget_data_line' limit="15">
@@ -78,6 +75,13 @@
 		            				</tree>
 		            			</field>
 		            		</page>
+							<page string="Quotation &amp; Contract">
+								<separator colspan="4" string="Quotations"/>
+								<field name="quotation_lists"/>
+								<separator colspan="4" string="Contract"/>
+								<field name="contract_lists"/>
+							</page>
+
 						</notebook>
            			</sheet>
                	</form>

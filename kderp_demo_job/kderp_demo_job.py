@@ -1,4 +1,5 @@
 from openerp.osv import fields, osv
+import openerp.addons.decimal_precision as dp
 
 class account_analytic_account(osv.osv):
     _name = 'account.analytic.account'
@@ -97,6 +98,22 @@ class account_analytic_account(osv.osv):
             res[job_id]=tmp_list
         return res
     
+    def _get_job_budget_line(self, cr, uid, ids, context=None):
+        result = []
+        for kbd in self.pool.get('kderp.demo.budget.data').browse(cr, uid, ids, context=context):
+            result.append(kbd.account_analytic_id.id)
+        return result
+    
+    def total_budget_amount(self, cr, uid, ids, name, args, context):
+        res= {}
+        for kp in self.browse(cr, uid, ids):
+            total_budget = 0
+            for kbd in kp.kderp_budget_data_line:
+                total_budget+=kbd.planned_amount
+            res[kp.id] = {
+                          'total_budget_amount':total_budget
+                          }
+        return res
     _columns = {
                 'code': fields.char('Job No.',size=32, select=True,required=True),
                 'name': fields.char('Job Name', size=256, required=True,select=1),
@@ -148,10 +165,15 @@ class account_analytic_account(osv.osv):
                 #quotation and contract
                 'quotation_lists':fields.function(_get_quotation_lists, relation='sale.order',type='one2many',string='Quotations List',method=True),
                 'contract_lists':fields.function(_get_contract_lists, relation='demo.contract',type='one2many',string='Contract List',method=True),
+                #Job Info
+                'total_budget_amount':fields.function(total_budget_amount, type='float', string='Total Budget',
+                                                      digits_compute=dp.get_precision('Budget'),multi='_multi_get_total_budget',
+                                                      store={
+                                                             'account.analytic.account':(lambda self, cr, uid, ids, c={}: ids, ['kderp_budget_data_line'], 20),
+                                                             'kderp_demo_budget_data':(_get_job_budget_line, ['planned_amount','budget_id','account_analytic_id'], 20)}
+                                                      )
                 }
                 
-    
-
     _defaults={
                'code':lambda *x:'',
                'state':lambda *x:'doing',
