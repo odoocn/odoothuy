@@ -19,6 +19,34 @@ class sale_order(Model):
     STATE_SELECTION=[('draft', 'Not yet decided'),
                     ('done', 'Work Received'),
                     ('cancel', 'Cancelled')]
+    def _get_approved_amount_total(self, cr, uid, ids,  name, args, context=None):
+        res={}
+        for kdq in self.browse(cr, uid, ids):
+            res[kdq.id]={
+                         'currency':False,
+                         'approved_amount_total': 0.0
+                         }
+            for kdsq in kdq.summary_quotation_ids:
+                res[kdq.id]['currency']=kdsq.currency_id.id
+                res[kdq.id]['approved_amount_total']=kdsq.amount
+        return res
+    
+    def _get_approved_amount_e(self, cr, uid, ids, name, args, context=None):
+        res={}
+        for kdq in self.browse(cr, uid, ids):
+            res[kdq.id]=False
+            for kdqb in kdq.sale_order_line:
+                res[kdq.id]=kdqb.price_unit+kdqb.discount
+        return res
+    
+    def _get_approved_amount_m(self, cr, uid, ids, name, args, context=None):
+        res ={}
+        for kdq in self.browse(cr, uid, ids):
+            res[kdq.id]=False
+            for kdqb in kdq.sale_order_line_m:
+                res[kdq.id]=kdqb.price_unit+kdqb.discount
+        return res
+    
     _columns = {
        'name': fields.char('Quotation No.', size=16,required=True, states={'draft': [('readonly', False)], 'sent': [('readonly', False)]}, select=True),
        'dateofregistration':fields.date('Date of Registration'),
@@ -81,8 +109,14 @@ class sale_order(Model):
         'q_attached_jcombine':fields.boolean('J.Budget Combine'),
         'quotation_job_budget_na':fields.boolean('N/A'),
         'total_working_budget':fields.float('W.B.Amt.(M&E)'),
+        #Show tree view
+        'approved_amount_e':fields.function(_get_approved_amount_e, type='float', string='Approved E.', method=True),
+        'approved_amount_m':fields.function(_get_approved_amount_m, type='float', string='Approved M.', method=True),
+        'approved_amount_total':fields.function(_get_approved_amount_total, type='float',string='Total',method=True, multi='_get_quotation_approved_info'),
+        'currency':fields.function(_get_approved_amount_total,method=True,type='many2one',relation='res.currency',size=16,string='Cur.', multi='_get_quotation_approved_info'),
        }
-  
+
+    
     def create(self, cr, uid, vals, context=None):
         if vals.get('name','/')=='/':
             vals['name'] = self.pool.get('ir.sequence').get(cr, uid, 'sale.order') or '/'

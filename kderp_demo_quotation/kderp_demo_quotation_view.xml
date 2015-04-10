@@ -24,6 +24,12 @@
                     <field name="dateofregistration" string="Date of Reg."/>
                     <field name="state" string="Status"/>
                     <field name="partner_id"/>
+                    <field name="job_e_id"/>
+                    <field name="approved_amount_e"/>
+                    <field name="job_m_id"/>
+                    <field name="approved_amount_m"/>
+                    <field name="currency"/>
+                   	<field name="approved_amount_total"/>
                 </tree>
             </field>
         </record>
