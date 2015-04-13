@@ -19,6 +19,17 @@ class sale_order(Model):
     STATE_SELECTION=[('draft', 'Not yet decided'),
                     ('done', 'Work Received'),
                     ('cancel', 'Cancelled')]
+    
+    def _get_approved_amount_currency(self, cr, uid, ids,  name, args, context=None):
+        res={}
+        for kdq in self.browse(cr, uid, ids):
+            res[kdq.id]={
+                         'currency':False,
+                         }
+            for kdsq in kdq.quotation_submit_line:
+                res[kdq.id]['currency']=kdsq.currency_id.id
+        return res
+    
     def _get_approved_amount_total(self, cr, uid, ids,  name, args, context=None):
         res={}
         for kdq in self.browse(cr, uid, ids):
@@ -113,7 +124,7 @@ class sale_order(Model):
         'approved_amount_e':fields.function(_get_approved_amount_e, type='float', string='Approved E.', method=True),
         'approved_amount_m':fields.function(_get_approved_amount_m, type='float', string='Approved M.', method=True),
         'approved_amount_total':fields.function(_get_approved_amount_total, type='float',string='Total',method=True, multi='_get_quotation_approved_info'),
-        'currency':fields.function(_get_approved_amount_total,method=True,type='many2one',relation='res.currency',size=16,string='Cur.', multi='_get_quotation_approved_info'),
+        'currency':fields.function(_get_approved_amount_currency,method=True,type='many2one',relation='res.currency',size=16,string='Cur.', multi='_get_approved_amount_currency'),
        }
 
     
