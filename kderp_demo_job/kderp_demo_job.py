@@ -104,18 +104,7 @@ class account_analytic_account(osv.osv):
                 tmp_list=list(eval(tmp_list.strip().replace(' ',',').replace(' ','')))
             res[job_id]=tmp_list
         return res
-    #=============================================
-    def _get_summary_amount(self, cr, uid, ids, name, args, context):
-        res={}
-        kjc=self.pool.get('kderp.demo.project.cur')
-        cur_obj=self.pool.get('res.currency')
-        
-        for kp in self.browse(cr, uid, ids):
-            job_currency=kp.job_currency
-            if not job_currency:
-                res[kp.id]={'job_amount':00.0}
-        return res
-    #==================================================
+
     def _get_job_budget_line(self, cr, uid, ids, context=None):
         result = []
         for kbd in self.pool.get('kderp.demo.budget.data').browse(cr, uid, ids, context=context):
@@ -132,6 +121,17 @@ class account_analytic_account(osv.osv):
                           'total_budget_amount':total_budget
                           }
         return res
+    
+    #Lay Job Amount, VAT, Total
+    def _get_summary_amount(self, cr, uid, ids, name, arg, context=None):
+        res = {}
+        for amount in self.browse(cr, uid, ids, context):
+            res[amount.id]= {'job_amount' : 0,
+                             'job_tax':0,
+                             'job_total':0
+                             }
+        return res
+    #==================================================
     _columns = {
                 'code': fields.char('Job No.',size=32, select=True,required=True),
                 'name': fields.char('Job Name', size=256, required=True,select=1),
@@ -181,8 +181,9 @@ class account_analytic_account(osv.osv):
                                                store={
                                                       'kderp.demo.project.cur':(_get_job_to_job_cur, None, 10),
                                                     }),
-                'job_amount':fields.function(_get_summary_amount, type='float', string='Job Amount',method=True,
-                                             ),
+                'job_amount':fields.function(_get_summary_amount,string='Amount',type='float', digits_compute=dp.get_precision('Amount'),multi='_multi_get_summary_job'),
+                'job_tax':fields.function(_get_summary_amount,string='VAT',type='float', digits_compute=dp.get_precision('Amount'),multi='_multi_get_summary_job'),
+                'job_total':fields.function(_get_summary_amount,string='Total',type='float', digits_compute=dp.get_precision('Amount'),multi='_multi_get_summary_job'),
                 #quotation and contract
                 'quotation_lists':fields.function(_get_quotation_lists, relation='sale.order',type='one2many',string='Quotations List',method=True),
                 'contract_lists':fields.function(_get_contract_lists, relation='demo.contract',type='one2many',string='Contract List',method=True),

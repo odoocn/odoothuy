@@ -61,6 +61,8 @@
 							<group colspan="2" col="2">
 								<field name="job_currency"/>
 								<field name="job_amount"/>
+								<field name="job_tax"/>
+								<field name="job_total"/>
 							</group>
 	           			</group>
 						<notebook>
