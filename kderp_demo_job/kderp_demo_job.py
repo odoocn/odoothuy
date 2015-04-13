@@ -125,16 +125,49 @@ class account_analytic_account(osv.osv):
     #Lay Job Amount, VAT, Total
     def _get_summary_amount(self, cr, uid, ids, name, arg, context=None):
         res = {}
-        for amount in self.browse(cr, uid, ids, context):
-            res[amount.id]= {'job_amount' : 0,
-                             'job_tax':0,
-                             'job_total':0
-                             }
+        var = self.browse(cr, uid, ids, context)
+        job_amount=0
+        job_amount_e = 0
+        job_amount_m = 0
+        tax_amount = 0
+        for kp in var:
+            res[kp.id]={'job_amount' : 0,
+                        'job_tax':0,
+                        'job_total':0
+                        }
+            for b in var.demo_project_cur_ids:
+                if b.default_curr:
+                    for kq in kp.quotation_lists: 
+                        if kq.state not in ('draft', 'cancel'):                                        
+                            for qsl in kq.quotation_submit_line:
+                                if qsl.currency_id.name == 'VND' and kp.job_currency.name=='VND':
+                                    approved_amount_e = kq.approved_amount_e
+                                    approved_amount_m = kq.approved_amount_m
+                                elif qsl.currency_id.name != 'VND' and kp.job_currency.name!='VND':
+                                    approved_amount_e = kq.approved_amount_e
+                                    approved_amount_m = kq.approved_amount_m
+                                elif qsl.currency_id.name != 'VND' and kp.job_currency.name=='VND':
+                                    approved_amount_e = kq.approved_amount_e*qsl.currency_id.rate_silent
+                                    approved_amount_m = kq.approved_amount_m*qsl.currency_id.rate_silent
+                                elif qsl.currency_id.name == 'VND' and kp.job_currency.name!='VND':
+                                    approved_amount_e = kq.approved_amount_e/b.rate
+                                    approved_amount_m = kq.approved_amount_m/b.rate
+                                    
+                                if (kp.id == kq.job_e_id.id):
+                                    job_amount += approved_amount_e
+                                    tax_amount += approved_amount_e*(qsl.tax_amount/qsl.amount)
+                                elif kp.id == kq.job_m_id.id:
+                                    job_amount += approved_amount_m
+                                    tax_amount += approved_amount_m*(qsl.tax_amount/qsl.amount)
+                                
+                            res[kp.id]={'job_amount' : job_amount,
+                                        'job_tax':tax_amount,
+                                        'job_total':tax_amount+job_amount}
         return res
     #==================================================
     _columns = {
                 'code': fields.char('Job No.',size=32, select=True,required=True),
-                'name': fields.char('Job Name', size=256, required=True,select=1),
+                'name': fields.char('Job  Name', size=256, required=True,select=1),
                 'complete_name': fields.function(_get_full_name, type='char', string='Full Name'),
                 'description':fields.char('Description'),
                 'partner_id': fields.many2one('res.partner', 'Client'),    
