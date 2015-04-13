@@ -164,7 +164,7 @@ class account_analytic_account(osv.osv):
                                         'job_tax':tax_amount,
                                         'job_total':tax_amount+job_amount}
         return res
-    #==================================================
+
     _columns = {
                 'code': fields.char('Job No.',size=32, select=True,required=True),
                 'name': fields.char('Job  Name', size=256, required=True,select=1),
