@@ -43,11 +43,15 @@ class sale_order(Model):
     def _get_approved_amount_currency(self, cr, uid, ids,  name, args, context=None):
         res={}
         for kdq in self.browse(cr, uid, ids):
-            res[kdq.id]={
-                         'currency':False,
-                         }
+            res[kdq.id]={'currency':False}
             for kdsq in kdq.quotation_submit_line:
                 res[kdq.id]['currency']=kdsq.currency_id.id
+        return res
+    
+    def _get_currency_from_quotation_submit_line(self, cr, uid, ids, context=None):
+        res=[]
+        for kdq in self.pool.get('kderp.demo.sale.order.submit.line').browse(cr, uid, ids, context=context):
+            res.append(kdq.order_id.id)
         return res
     
     def _get_approved_amount_info(self, cr, uid, ids, name, args, context=None):
@@ -153,7 +157,11 @@ class sale_order(Model):
                                                 store={'kderp.demo.quotation.breakdown':(_get_approved_from_quotation_breakdown, None, 35),
                                                        'sale.order':(lambda self, cr, uid, ids, c={}: ids, ['sale_order_line', 'sale_order_line_m'],10)
                                                     }),
-        'currency':fields.function(_get_approved_amount_currency,method=True,type='many2one',relation='res.currency',size=16,string='Cur.', multi='_get_approved_amount_currency'),
+        'currency':fields.function(_get_approved_amount_currency,method=True,type='many2one',relation='res.currency',size=16,string='Cur.',
+                                    multi='_get_approved_amount_currency',
+                                    store={'kderp.demo.sale.order.submit.line':(_get_currency_from_quotation_submit_line,None, 35),
+                                           'sale.order':(lambda self, cr, uid, ids, c={}: ids, ['quotation_submit_line'],10)
+                                           }),
        }
     
     # compute and search fields, in the same order that fields declaration
