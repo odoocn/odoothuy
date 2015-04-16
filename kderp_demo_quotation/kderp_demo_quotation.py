@@ -19,6 +19,26 @@ class sale_order(Model):
     STATE_SELECTION=[('draft', 'Not yet decided'),
                     ('done', 'Work Received'),
                     ('cancel', 'Cancelled')]
+    #defined
+    def _get_newcode(self,cr,uid,context={}):
+        cr.execute("""Select 
+                        prefix ||
+                        substring(date_part('year',current_date)::text from 3 for 2) || '-' ||
+                        lpad(coalesce(max((substring(so.name from length(prefix)+4 for padding))::int)+1,1)::text,padding,'0') ||
+                        '-' || suffix
+                    from 
+                        ir_sequence cis
+                    left join
+                        sale_order so on so.name ilike cis.prefix || substring(date_part('year',current_date)::text from 3 for 2) || '-' || lpad('_',padding,'_') || '%%'  
+                    where 
+                        (cis.code ilike 'kderp_hanoi_quotation') and active=True
+                    group by
+                        cis.id""")
+        new_code=False
+        res = cr.fetchone()
+        if res:
+            new_code = res[0]
+        return new_code
     
     def _get_approved_amount_currency(self, cr, uid, ids,  name, args, context=None):
         res={}
@@ -30,34 +50,31 @@ class sale_order(Model):
                 res[kdq.id]['currency']=kdsq.currency_id.id
         return res
     
-    def _get_approved_amount_total(self, cr, uid, ids,  name, args, context=None):
+    def _get_approved_amount_info(self, cr, uid, ids, name, args, context=None):
         res={}
         for kdq in self.browse(cr, uid, ids):
-            res[kdq.id]={
-                         'currency':False,
-                         'approved_amount_total': 0.0
-                         }
-            for kdsq in kdq.summary_quotation_ids:
-                res[kdq.id]['currency']=kdsq.currency_id.id
-                res[kdq.id]['approved_amount_total']=kdsq.amount
+            res[kdq.id]={'approved_amount_e':0,
+                         'approved_amount_m':0,
+                         'approved_amount_total':0}
+            for a in kdq.sale_order_line:
+                res[kdq.id]['approved_amount_e']=a.price_unit+a.discount
+                res[kdq.id]['approved_amount_total']=a.price_unit+a.discount
+            for a in kdq.sale_order_line_m:
+                res[kdq.id]['approved_amount_m']=a.price_unit+a.discount
+                res[kdq.id]['approved_amount_total']+=a.price_unit+a.discount
         return res
     
-    def _get_approved_amount_e(self, cr, uid, ids, name, args, context=None):
-        res={}
-        for kdq in self.browse(cr, uid, ids):
-            res[kdq.id]=False
-            for kdqb in kdq.sale_order_line:
-                res[kdq.id]=kdqb.price_unit+kdqb.discount
+    def _get_approved_from_quotation_breakdown(self, cr, uid, ids, context=None):
+        res = []
+        for a in self.pool.get('kderp.demo.quotation.breakdown').browse(cr, uid, ids, context=context):
+            res.append(a.order_id.id)
         return res
     
-    def _get_approved_amount_m(self, cr, uid, ids, name, args, context=None):
-        res ={}
-        for kdq in self.browse(cr, uid, ids):
-            res[kdq.id]=False
-            for kdqb in kdq.sale_order_line_m:
-                res[kdq.id]=kdqb.price_unit+kdqb.discount
-        return res
-    
+    _defaults={
+                'company_id':'',
+                'name': _get_newcode,
+                'date_order': lambda *x: False,
+               }
     _columns = {
        'name': fields.char('Quotation No.', size=16,required=True, states={'draft': [('readonly', False)], 'sent': [('readonly', False)]}, select=True),
        'dateofregistration':fields.date('Date of Registration'),
@@ -121,52 +138,27 @@ class sale_order(Model):
         'quotation_job_budget_na':fields.boolean('N/A'),
         'total_working_budget':fields.float('W.B.Amt.(M&E)'),
         #Show tree view
-        'approved_amount_e':fields.function(_get_approved_amount_e, type='float', string='Approved E.', method=True),
-        'approved_amount_m':fields.function(_get_approved_amount_m, type='float', string='Approved M.', method=True),
-        'approved_amount_total':fields.function(_get_approved_amount_total, type='float',string='Total',method=True, multi='_get_quotation_approved_info'),
+        'approved_amount_e':fields.function(_get_approved_amount_info, type='float', string='Approved E.', method=True,
+                                             multi='_get_quotation_approved_info',digits_compute= dp.get_precision('Product Price'),
+                                             store={'kderp.demo.quotation.breakdown':(_get_approved_from_quotation_breakdown, None, 35),
+                                                    'sale.order':(lambda self, cr, uid, ids, c={}: ids, ['sale_order_line', 'sale_order_line_m'],10)
+                                                    }),
+        'approved_amount_m':fields.function(_get_approved_amount_info, type='float', string='Approved M.', method=True,
+                                            multi='_get_quotation_approved_info',digits_compute= dp.get_precision('Product Price'),
+                                            store={'kderp.demo.quotation.breakdown':(_get_approved_from_quotation_breakdown, None, 35),
+                                                   'sale.order':(lambda self, cr, uid, ids, c={}: ids, ['sale_order_line', 'sale_order_line_m'],10)
+                                                    }),
+        'approved_amount_total':fields.function(_get_approved_amount_info, type='float',string='Total',method=True, 
+                                                multi='_get_quotation_approved_info',digits_compute= dp.get_precision('Product Price'),
+                                                store={'kderp.demo.quotation.breakdown':(_get_approved_from_quotation_breakdown, None, 35),
+                                                       'sale.order':(lambda self, cr, uid, ids, c={}: ids, ['sale_order_line', 'sale_order_line_m'],10)
+                                                    }),
         'currency':fields.function(_get_approved_amount_currency,method=True,type='many2one',relation='res.currency',size=16,string='Cur.', multi='_get_approved_amount_currency'),
        }
-
     
-    def create(self, cr, uid, vals, context=None):
-        if vals.get('name','/')=='/':
-            vals['name'] = self.pool.get('ir.sequence').get(cr, uid, 'sale.order') or '/'
-        r=self.pool.get('ir.rule').clear_cache(cr,uid)
-        new_obj=super(sale_order, self).create(cr, uid, vals, context=context)
-        return new_obj
+    # compute and search fields, in the same order that fields declaration
     
-    def copy(self, cr, uid, id, default=None, context=None):
-        if not default:
-            default = {}
-        default.update({
-            'name':'/',      
-        })
-        #raise osv.except_osv("E",default)
-        res=super(sale_order, self).copy(cr, uid, id, default, context)
-        self.write(cr, uid, [res], {'date_order':False})
-        self.pool.get('ir.rule').clear_cache(cr,uid)
-        return res
-      
-    def _get_newcode(self,cr,uid,context={}):
-        cr.execute("""Select 
-                        prefix ||
-                        substring(date_part('year',current_date)::text from 3 for 2) || '-' ||
-                        lpad(coalesce(max((substring(so.name from length(prefix)+4 for padding))::int)+1,1)::text,padding,'0') ||
-                        '-' || suffix
-                    from 
-                        ir_sequence cis
-                    left join
-                        sale_order so on so.name ilike cis.prefix || substring(date_part('year',current_date)::text from 3 for 2) || '-' || lpad('_',padding,'_') || '%%'  
-                    where 
-                        (cis.code ilike 'kderp_hanoi_quotation') and active=True
-                    group by
-                        cis.id""")
-        new_code=False
-        res = cr.fetchone()
-        if res:
-            new_code = res[0]
-        return new_code
-    
+    # Constraints and onchanges
     def onchange_partner_id(self, cr, uid, ids, part, context=None):
         if not part:
             return {'value': {'partner_invoice_id': False, 'partner_shipping_id': False, 'partner_address_id': False,  'payment_term': False, 'fiscal_position': False}}
@@ -193,16 +185,31 @@ class sale_order(Model):
         if pricelist:
             val['pricelist_id'] = pricelist
         return {'value': val}
-    
-      
-    _defaults={
-                'company_id':'',
-                'name': _get_newcode,
-                'date_order': lambda *x: False,
-               }
+
     _sql_constraints = [
         ('demo_quotation_name_uniq', 'unique(name)', 'Quotation No. must by unique'),]
     
+    # CRUD methods
+    def create(self, cr, uid, vals, context=None):
+        if vals.get('name','/')=='/':
+            vals['name'] = self.pool.get('ir.sequence').get(cr, uid, 'sale.order') or '/'
+        r=self.pool.get('ir.rule').clear_cache(cr,uid)
+        new_obj=super(sale_order, self).create(cr, uid, vals, context=context)
+        return new_obj
+    
+    def copy(self, cr, uid, id, default=None, context=None):
+        if not default:
+            default = {}
+        default.update({
+            'name':'/',      
+        })
+        #raise osv.except_osv("E",default)
+        res=super(sale_order, self).copy(cr, uid, id, default, context)
+        self.write(cr, uid, [res], {'date_order':False})
+        self.pool.get('ir.rule').clear_cache(cr,uid)
+        return res
+    
+    # Action methods
     def action_work_received(self, cr, uid, ids, context=None):
         self.write(cr, uid, ids, {'state': 'done'}, context=context)
         return True
@@ -243,7 +250,8 @@ class kderp_demo_sale_order_submit_line(Model):
         'amount':fields.float('Amount'),
         'tax_id': fields.many2many('account.tax', 'kderp_demo_sale_order_submit_tax', 'order_line_id', 'tax_id', 'Taxes'),
         'tax_amount':fields.function(_get_amount_line,type='float',string='VAT',method=True,multi='_get_amount_submit_line',digits_compute= dp.get_precision('Product Price'),
-                                     store = {'kderp.demo.sale.order.submit.line':(lambda self, cr, uid, ids, c={}: ids, None, 5)}),
+                                     store = {
+                                              'kderp.demo.sale.order.submit.line':(lambda self, cr, uid, ids, c={}: ids, None, 5)}),
         'subtotal':fields.function(_get_amount_line,type='float',string='Sub-Total',method=True,multi='_get_amount_submit_line',digits_compute= dp.get_precision('Product Price'),
                                     store={'kderp.demo.sale.order.submit.line':(lambda self, cr, uid, ids, c={}: ids, None, 5)}),
             }                               
