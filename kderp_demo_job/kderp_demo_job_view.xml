@@ -67,7 +67,14 @@
 	           			</group>
 						<notebook>
 							<page string="Job Info.">
-								<field name="total_budget_amount"/>
+								<group col="4" colspan="4">
+									<group col = "2" colspan="2" string="VND">
+										<field name="total_budget_amount"/>
+									</group>
+									<group col = "2" colspan="2" string="USD">
+										<field name="total_budget_amount"/>
+									</group>
+								</group>
 							</page>
 							<page string='Budget'>
 		            			<field name='kderp_budget_data_line' limit="15">
