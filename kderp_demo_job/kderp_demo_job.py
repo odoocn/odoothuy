@@ -115,12 +115,22 @@ class account_analytic_account(osv.osv):
         res= {}
         for kp in self.browse(cr, uid, ids):
             total_budget = 0
+            total_budget_vnd = 0
+            total_budget_usd = 0
             for kbd in kp.kderp_budget_data_line:
                 total_budget+=kbd.planned_amount
+            for a in kp.demo_project_cur_ids:
+                if a.name.name=='VND':
+                    total_budget_vnd=total_budget
+                elif a.name.name=='USD':
+                    total_budget_usd=total_budget/a.rate
             res[kp.id] = {
-                          'total_budget_amount':total_budget
+                          'total_budget_amount':total_budget_vnd,
+                          'total_budget_amount_usd':total_budget_usd
                           }
+            
         return res
+
     
     #Lay Job Amount, VAT, Total
     def _get_summary_amount(self, cr, uid, ids, name, arg, context=None):
@@ -222,6 +232,12 @@ class account_analytic_account(osv.osv):
                 'contract_lists':fields.function(_get_contract_lists, relation='demo.contract',type='one2many',string='Contract List',method=True),
                 #Job Info
                 'total_budget_amount':fields.function(total_budget_amount, type='float', string='Total Budget',
+                                                      digits_compute=dp.get_precision('Budget'),multi='_multi_get_total_budget',
+                                                      store={
+                                                             'account.analytic.account':(lambda self, cr, uid, ids, c={}: ids, ['kderp_budget_data_line'], 20),
+                                                             'kderp_demo_budget_data':(_get_job_budget_line, ['planned_amount','budget_id','account_analytic_id'], 20)}
+                                                      ),
+                'total_budget_amount_usd':fields.function(total_budget_amount, type='float', string='Total Budget',
                                                       digits_compute=dp.get_precision('Budget'),multi='_multi_get_total_budget',
                                                       store={
                                                              'account.analytic.account':(lambda self, cr, uid, ids, c={}: ids, ['kderp_budget_data_line'], 20),

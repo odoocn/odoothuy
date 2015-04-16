@@ -72,7 +72,7 @@
 										<field name="total_budget_amount"/>
 									</group>
 									<group col = "2" colspan="2" string="USD">
-										<field name="total_budget_amount"/>
+										<field name="total_budget_amount_usd"/>
 									</group>
 								</group>
 							</page>
