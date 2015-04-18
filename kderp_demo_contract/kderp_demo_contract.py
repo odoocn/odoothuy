@@ -9,6 +9,17 @@ class demo_contract(Model):
     _description = 'Demo Contract'
     _rec_name="code"
     
+    _defaults={
+               'outstanding':'none'
+               }
+    
+    def create(self, cr, uid, vals, context=None):
+        new_contract_id = super(demo_contract, self).create(cr, uid, vals, context=context)
+        kcc = self.pool.get('demo.contract.cur')
+        new_id = kcc.create_currency(cr, uid, new_contract_id, context)
+        self.pool.get('ir.rule').clear_cache(cr, uid)
+        return new_contract_id   
+    
     def onchange_partner_id(self, cr, uid, ids, partner_id):
             partner = self.pool.get('res.partner')
             if not partner_id:
@@ -57,8 +68,7 @@ class demo_contract(Model):
         'demo_contract_cur_ids':fields.one2many('demo.contract.cur','contract_id','Contract Cur.'),
         'demo_contract_summary_cur_ids':fields.one2many('demo.contract.cur','contract_id', string = 'Cur.', domain=[('default_curr','=',True)]),
         }
-    _defaults={
-               'outstanding':'none'
-               }
 
+
+    
 demo_contract()
