@@ -23,6 +23,7 @@ class demo_contract_cur(Model):
                 new_id = self.create(cr, uid, {'name':cur.id, 'rate':cur.rate, 'rounding':cur.rounding, 'default_curr':True, 'contract_id':contract_id})
                 new_ids.append(new_id)
         return new_ids
+    
     _columns = {
                 
                 'name': fields.many2one('res.currency','Currency'),
@@ -30,6 +31,10 @@ class demo_contract_cur(Model):
                 'rounding':fields.float('Rounding', digits =(12,2)),
                 'default_curr': fields.boolean('Default'),        
                 'contract_id':fields.many2one('demo.contract','Contract'),
+                'tax_id': fields.many2many('account.tax', 'kderp_contract_tax', 'contract_currency_id', 'tax_id', 'VAT (%)', domain="[('parent_id','=',False),('type_tax_use','=','sale')]",change_default=True),
+                'amount':fields.float('Amount'),
+                'amount_tax':fields.float('Amount Tax'),
+                'amount_total':fields.float('Total')
         }
     _defaults={
                
