@@ -63,6 +63,34 @@ class demo_contract(Model):
             res[contract_id]=tmp_list
         return res
     
+    def _get_job_lists(self, cr, uid, ids, name, arg, context=None):
+        res = {}
+        contract_ids=",".join(map(str,ids)) 
+        cr.execute("""
+                    SELECT 
+                        dc.id,
+                        trim(array_to_string(array_agg(aaa.id ::text),' '))
+                    FROM 
+                        demo_contract dc
+                    left join
+                        sale_order so on dc.id=so.contract_id
+                    left join
+                        account_analytic_account aaa on so.job_e_id = aaa.id or so.job_m_id = aaa.id
+                    where dc.id in (%s)
+                    group by
+                        dc.id
+                    """%(contract_ids))
+        for contract_id, list_id in cr.fetchall():
+            tmp_list = list_id
+            if not tmp_list:
+                tmp_list=[]
+            elif tmp_list.isdigit():
+                tmp_list=[int(tmp_list)]
+            else:
+                tmp_list=list(eval(tmp_list.strip().replace(' ',',').replace(' ','')))
+            res[contract_id]=tmp_list
+        return res
+    
     _columns = {
        'code': fields.char('Code', required=True),
        'name':fields.char('Description', required=True),
@@ -94,6 +122,7 @@ class demo_contract(Model):
         'demo_contract_cur_ids':fields.one2many('demo.contract.cur','contract_id','Contract Cur.'),
         'demo_contract_summary_cur_ids':fields.one2many('demo.contract.cur','contract_id', string = 'Cur.', domain=[('default_curr','=',True)]),
         'quotation_lists':fields.function(_get_quotation_lists, relation='sale.order',type='one2many',string='Quotations List',method=True),
+        'job_lists':fields.function(_get_job_lists, relation='account.analytic.account',type='one2many',string='Job List',method=True),
         }
 
 

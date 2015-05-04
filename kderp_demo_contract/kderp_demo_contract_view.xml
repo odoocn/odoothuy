@@ -79,9 +79,13 @@
                				</field>
                			</group>
                			<notebook>
+               				<page string="Job Info.">
+								<field name="job_lists"/>
+							</page>
                				<page string="Quotation Info.">
 								<field name="quotation_lists"/>
 							</page>
+							
                			</notebook>
            			</sheet>
                	</form>
