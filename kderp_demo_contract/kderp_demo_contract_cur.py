@@ -3,6 +3,7 @@ from openerp.osv import fields, osv
 
 import openerp.addons.decimal_precision as dp
 import re
+from openerp.tools import float_round
 
 class demo_contract_cur(Model):
     _name = 'demo.contract.cur'
@@ -43,6 +44,67 @@ class demo_contract_cur(Model):
         osv.osv.unlink(self, cr, uid, unlink_ids, context=context)
         return True
     
+    def _get_quotation_lists(self, cr, uid, ids, name, arg, context=None):
+        res = {}
+        contract_ids=",".join(map(str,ids)) 
+        cr.execute("""
+                    SELECT 
+                        dcc.id,
+                        trim(array_to_string(array_agg(so.id::text),' '))
+                    FROM 
+                        demo_contract_cur dcc 
+                    left join
+                        demo_contract dc on dcc.contract_id = dc.id and dcc.default_curr = true
+                    left join
+                        sale_order so on dc.id=so.contract_id
+                    where dcc.id in (%s)
+                    group by
+                        dcc.id
+                    """%(contract_ids))
+        for contract_id, list_id in cr.fetchall():
+            tmp_list = list_id
+            if not tmp_list:
+                tmp_list=[]
+            elif tmp_list.isdigit():
+                tmp_list=[int(tmp_list)]
+            else:
+                tmp_list=list(eval(tmp_list.strip().replace(' ',',').replace(' ','')))
+            res[contract_id]=tmp_list
+        return res
+    
+    def _get_summary_amount(self, cr, uid, ids, name, arg, context=None):
+        res={}
+        var = self.browse(cr, uid, ids, context)
+        amount=0
+        amount_tax = 0
+        amount_total = 0
+        for dcc in var:
+            res[dcc.id]={'amount' : 0,
+                         'amount_tax':0,
+                         'amount_total':0
+                        }
+            for so in dcc.quotation_lists:
+                if so.state not in ('draft', 'cancel'):                                        
+                    for qsl in so.quotation_submit_line:
+                        if qsl.currency_id.name == 'VND' and dcc.name.name=='VND':
+                            approved_amount_e = so.approved_amount_e
+                            approved_amount_m = so.approved_amount_m
+                        elif qsl.currency_id.name != 'VND' and dcc.name.name!='VND':
+                            approved_amount_e = so.approved_amount_e
+                            approved_amount_m = so.approved_amount_m
+                        elif qsl.currency_id.name != 'VND' and dcc.name.name=='VND':
+                            approved_amount_e = so.approved_amount_e*qsl.currency_id.rate_silent
+                            approved_amount_m = so.approved_amount_m*qsl.currency_id.rate_silent
+                        elif qsl.currency_id.name == 'VND' and dcc.name.name!='VND':
+                            approved_amount_e = so.approved_amount_e/dcc.rate
+                            approved_amount_m = so.approved_amount_m/dcc.rate
+ 
+                        amount += (approved_amount_e+approved_amount_m)
+                        
+                    res[dcc.id]={'amount' : amount,
+                                 'amount_tax':amount*dcc.tax_id.amount,
+                                 'amount_total':amount+amount*dcc.tax_id.amount}
+        return res
     _columns = {
                 
                 'name': fields.many2one('res.currency','Currency'),
@@ -51,9 +113,10 @@ class demo_contract_cur(Model):
                 'default_curr': fields.boolean('Default'),        
                 'contract_id':fields.many2one('demo.contract','Contract'),
                 'tax_id': fields.many2many('account.tax', 'kderp_contract_tax', 'contract_currency_id', 'tax_id', 'VAT (%)', domain="[('parent_id','=',False),('type_tax_use','=','sale')]",change_default=True),
-                'amount':fields.float('Amount'),
-                'amount_tax':fields.float('Amount Tax'),
-                'amount_total':fields.float('Total')
+                'amount':fields.function(_get_summary_amount,string='Amount',type='float', digits_compute=dp.get_precision('Amount'),multi='_multi_get_summary'),
+                'amount_tax':fields.function(_get_summary_amount,string='VAT',type='float', digits_compute=dp.get_precision('Amount'),multi='_multi_get_summary'),
+                'amount_total':fields.function(_get_summary_amount,string='Total',type='float', digits_compute=dp.get_precision('Amount'),multi='_multi_get_summary'),
+                'quotation_lists':fields.function(_get_quotation_lists, relation='sale.order',type='one2many',string='Quotations List',method=True),
         }
 
     _defaults={

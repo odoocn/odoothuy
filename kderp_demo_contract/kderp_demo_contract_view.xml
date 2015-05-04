@@ -74,6 +74,7 @@
 				                    <field name="tax_id" widget="many2many_tags" domain="[('parent_id','=',False),('type_tax_use','=','sale')]"/>
 				                    <field name="amount_tax"/>
 				                    <field name="amount_total"/>
+				                    <!-- <field name="quotation_lists"/> -->
 				                </tree>
                				</field>
                			</group>
