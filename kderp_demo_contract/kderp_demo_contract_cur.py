@@ -24,6 +24,25 @@ class demo_contract_cur(Model):
                 new_ids.append(new_id)
         return new_ids
     
+    def unlink(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
+
+        unlink_ids = []
+
+        for kccur in self.browse(cr, uid, ids):
+            if kccur.default_curr:
+                raise osv.except_osv("KDERP Warning","""You cannot delete an Contract Currency is Default, Please follow steps:
+                                                            1. Click Discard Button.
+                                                            2. Click Edit -> Uncheck default Currency, 
+                                                            3. Click Save.
+                                                            4. Delete Contract Currency Again !""")
+            else:
+                unlink_ids.append(kccur.id)
+
+        osv.osv.unlink(self, cr, uid, unlink_ids, context=context)
+        return True
+    
     _columns = {
                 
                 'name': fields.many2one('res.currency','Currency'),
@@ -36,6 +55,7 @@ class demo_contract_cur(Model):
                 'amount_tax':fields.float('Amount Tax'),
                 'amount_total':fields.float('Total')
         }
+
     _defaults={
                
                }
