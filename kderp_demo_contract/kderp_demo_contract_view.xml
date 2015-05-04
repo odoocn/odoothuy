@@ -78,6 +78,11 @@
 				                </tree>
                				</field>
                			</group>
+               			<notebook>
+               				<page string="Quotation Info.">
+								<field name="quotation_lists"/>
+							</page>
+               			</notebook>
            			</sheet>
                	</form>
            </field>

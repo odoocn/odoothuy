@@ -36,7 +36,33 @@ class demo_contract(Model):
                 'client_id': supplier.street or False,
                 'invoice_id': supplier.street or False,
                 }}
-        
+    
+    def _get_quotation_lists(self, cr, uid, ids, name, arg, context=None):
+        res = {}
+        contract_ids=",".join(map(str,ids)) 
+        cr.execute("""
+                    SELECT 
+                        dc.id,
+                        trim(array_to_string(array_agg(so.id::text),' '))
+                    FROM 
+                        demo_contract dc
+                    left join
+                        sale_order so on dc.id=so.contract_id
+                    where dc.id in (%s)
+                    group by
+                        dc.id
+                    """%(contract_ids))
+        for contract_id, list_id in cr.fetchall():
+            tmp_list = list_id
+            if not tmp_list:
+                tmp_list=[]
+            elif tmp_list.isdigit():
+                tmp_list=[int(tmp_list)]
+            else:
+                tmp_list=list(eval(tmp_list.strip().replace(' ',',').replace(' ','')))
+            res[contract_id]=tmp_list
+        return res
+    
     _columns = {
        'code': fields.char('Code', required=True),
        'name':fields.char('Description', required=True),
@@ -67,6 +93,7 @@ class demo_contract(Model):
         'demo_payment_term_ids':fields.one2many('demo.client.payment.term','contract_id','Payment Term'),
         'demo_contract_cur_ids':fields.one2many('demo.contract.cur','contract_id','Contract Cur.'),
         'demo_contract_summary_cur_ids':fields.one2many('demo.contract.cur','contract_id', string = 'Cur.', domain=[('default_curr','=',True)]),
+        'quotation_lists':fields.function(_get_quotation_lists, relation='sale.order',type='one2many',string='Quotations List',method=True),
         }
 
 
