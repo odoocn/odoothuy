@@ -110,6 +110,8 @@
                     <field name="job_type"/>
                     <field name="state"/>
                     <field name="process_status"/>
+                    <field name="job_currency"/>
+                    <field name="job_amount"/>
                 </tree>
             </field>
         </record>

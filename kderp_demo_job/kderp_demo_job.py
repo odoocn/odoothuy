@@ -136,45 +136,74 @@ class account_analytic_account(osv.osv):
     def _get_summary_amount(self, cr, uid, ids, name, arg, context=None):
         res = {}
         var = self.browse(cr, uid, ids, context)
-        job_amount=0
-        job_amount_e = 0
-        job_amount_m = 0
+        job_amount = 0
         tax_amount = 0
+        job_total = 0
         for kp in var:
-            res[kp.id]={'job_amount' : 0,
-                        'job_tax':0,
-                        'job_total':0
-                        }
             for b in var.demo_project_cur_ids:
                 if b.default_curr:
-                    for kq in kp.quotation_lists: 
-                        if kq.state not in ('draft', 'cancel'):                                        
-                            for qsl in kq.quotation_submit_line:
-                                if qsl.currency_id.name == 'VND' and kp.job_currency.name=='VND':
-                                    approved_amount_e = kq.approved_amount_e
-                                    approved_amount_m = kq.approved_amount_m
-                                elif qsl.currency_id.name != 'VND' and kp.job_currency.name!='VND':
-                                    approved_amount_e = kq.approved_amount_e
-                                    approved_amount_m = kq.approved_amount_m
-                                elif qsl.currency_id.name != 'VND' and kp.job_currency.name=='VND':
-                                    approved_amount_e = kq.approved_amount_e*qsl.currency_id.rate_silent
-                                    approved_amount_m = kq.approved_amount_m*qsl.currency_id.rate_silent
-                                elif qsl.currency_id.name == 'VND' and kp.job_currency.name!='VND':
-                                    approved_amount_e = kq.approved_amount_e/b.rate
-                                    approved_amount_m = kq.approved_amount_m/b.rate
+                    if kp.quotation_lists:
+                        for kq in kp.quotation_lists:   
+                            if kq.state not in ('draft', 'cancel'):                                        
+                                for qsl in kq.quotation_submit_line:
+                                    if qsl.currency_id.name == 'VND' and kp.job_currency.name=='VND':
+                                        approved_amount_e = kq.approved_amount_e
+                                        approved_amount_m = kq.approved_amount_m
+                                    elif qsl.currency_id.name != 'VND' and kp.job_currency.name!='VND':
+                                        approved_amount_e = kq.approved_amount_e
+                                        approved_amount_m = kq.approved_amount_m
+                                    elif qsl.currency_id.name != 'VND' and kp.job_currency.name=='VND':
+                                        approved_amount_e = kq.approved_amount_e*qsl.currency_id.rate_silent
+                                        approved_amount_m = kq.approved_amount_m*qsl.currency_id.rate_silent
+                                    elif qsl.currency_id.name == 'VND' and kp.job_currency.name!='VND':
+                                        approved_amount_e = kq.approved_amount_e/b.rate
+                                        approved_amount_m = kq.approved_amount_m/b.rate
+                                        
+                                    if (kp.id == kq.job_e_id.id):
+                                        job_amount += approved_amount_e
+                                        tax_amount += approved_amount_e*(qsl.tax_amount/qsl.amount)
+                                    elif kp.id == kq.job_m_id.id:
+                                        job_amount += approved_amount_m
+                                        tax_amount += approved_amount_m*(qsl.tax_amount/qsl.amount)
                                     
-                                if (kp.id == kq.job_e_id.id):
-                                    job_amount += approved_amount_e
-                                    tax_amount += approved_amount_e*(qsl.tax_amount/qsl.amount)
-                                elif kp.id == kq.job_m_id.id:
-                                    job_amount += approved_amount_m
-                                    tax_amount += approved_amount_m*(qsl.tax_amount/qsl.amount)
-                                
-                            res[kp.id]={'job_amount' : job_amount,
-                                        'job_tax':tax_amount,
-                                        'job_total':tax_amount+job_amount}
+                        res[kp.id]={'job_amount' : job_amount,
+                                    'job_tax':tax_amount,
+                                    'job_total':job_amount+tax_amount}          
+                    else:
+                        res[kp.id]={'job_amount' : 0,
+                                    'job_tax': 0,
+                                    'job_total': 0}
         return res
-
+    
+    def _get_quotations_link(self, cr, uid, ids, context=None):
+        result = []
+        for so in self.pool.get('sale.order').browse(cr, uid, ids, context=context):
+            if so.job_e_id:
+                result.append(so.job_e_id.id)
+            if so.job_m_id:
+                result.append(so.job_m_id.id)
+        return list(set(result))
+    
+    def _get_quotations_submit_link(self, cr, uid, ids, context=None):
+        result = []
+        for ksosl in self.pool.get('kderp.demo.sale.order.submit.line').browse(cr, uid, ids, context=context):
+            if ksosl.order_id:
+                if ksosl.order_id.job_e_id:
+                    result.append(ksosl.order_id.job_e_id.id)
+                if ksosl.order_id.job_m_id:
+                    result.append(ksosl.order_id.job_m_id.id)        
+        return list(set(result))
+    
+    def _get_quotations_approve_link(self, cr, uid, ids, context=None):
+        result = []
+        for sol in self.pool.get('kderp.demo.quotation.breakdown').browse(cr, uid, ids, context=context):
+            if sol.order_id:
+                if sol.order_id.job_e_id:
+                    result.append(sol.order_id.job_e_id.id)
+                if sol.order_id.job_m_id:
+                    result.append(sol.order_id.job_m_id.id)
+        return list(set(result))
+    
     _columns = {
                 'code': fields.char('Job No.',size=32, select=True,required=True),
                 'name': fields.char('Job  Name', size=256, required=True,select=1),
@@ -224,9 +253,31 @@ class account_analytic_account(osv.osv):
                                                store={
                                                       'kderp.demo.project.cur':(_get_job_to_job_cur, None, 10),
                                                     }),
-                'job_amount':fields.function(_get_summary_amount,string='Amount',type='float', digits_compute=dp.get_precision('Amount'),multi='_multi_get_summary_job'),
-                'job_tax':fields.function(_get_summary_amount,string='VAT',type='float', digits_compute=dp.get_precision('Amount'),multi='_multi_get_summary_job'),
-                'job_total':fields.function(_get_summary_amount,string='Total',type='float', digits_compute=dp.get_precision('Amount'),multi='_multi_get_summary_job'),
+                'job_amount':fields.function(_get_summary_amount,string='Amount',type='float', 
+                                             digits_compute=dp.get_precision('Amount'),multi='_multi_get_summary_job',
+                                             store={
+                                                      'kderp.demo.project.cur':(_get_job_to_job_cur, None, 10),
+                                                      'sale.order':(_get_quotations_link, ['job_e_id','job_m_id','approved_amount_e','approved_amount_m'], 20),
+                                                      'kderp.demo.sale.order.submit.line':(_get_quotations_submit_link, ['tax_amount','amount'], 20),
+                                                      'kderp.demo.quotation.breakdown':(_get_quotations_approve_link, None, 20),
+                                                    }
+                                             ),
+                'job_tax':fields.function(_get_summary_amount,string='VAT',type='float', digits_compute=dp.get_precision('Amount'),multi='_multi_get_summary_job',
+                                          store={
+                                                      'kderp.demo.project.cur':(_get_job_to_job_cur, None, 10),
+                                                      'sale.order':(_get_quotations_link, ['job_e_id','job_m_id','approved_amount_e','approved_amount_m'], 20),
+                                                      'kderp.demo.sale.order.submit.line':(_get_quotations_submit_link, ['tax_amount','amount'], 20),
+                                                      'kderp.demo.quotation.breakdown':(_get_quotations_approve_link, None, 20),
+                                                    }        
+                                          ),
+                'job_total':fields.function(_get_summary_amount,string='Total',type='float', digits_compute=dp.get_precision('Amount'),multi='_multi_get_summary_job',
+                                            store={
+                                                      'kderp.demo.project.cur':(_get_job_to_job_cur, None, 10),
+                                                      'sale.order':(_get_quotations_link, ['job_e_id','job_m_id','approved_amount_e','approved_amount_m'], 20),
+                                                      'kderp.demo.sale.order.submit.line':(_get_quotations_submit_link, ['tax_amount','amount'], 20),
+                                                      'kderp.demo.quotation.breakdown':(_get_quotations_approve_link, None, 20),
+                                                    }
+                                            ),
                 #quotation and contract
                 'quotation_lists':fields.function(_get_quotation_lists, relation='sale.order',type='one2many',string='Quotations List',method=True),
                 'contract_lists':fields.function(_get_contract_lists, relation='demo.contract',type='one2many',string='Contract List',method=True),
@@ -235,13 +286,13 @@ class account_analytic_account(osv.osv):
                                                       digits_compute=dp.get_precision('Budget'),multi='_multi_get_total_budget',
                                                       store={
                                                              'account.analytic.account':(lambda self, cr, uid, ids, c={}: ids, ['kderp_budget_data_line'], 20),
-                                                             'kderp_demo_budget_data':(_get_job_budget_line, ['planned_amount','budget_id','account_analytic_id'], 20)}
+                                                             'kderp.demo.budget.data':(_get_job_budget_line, ['planned_amount','budget_id','account_analytic_id'], 20)}
                                                       ),
                 'total_budget_amount_usd':fields.function(total_budget_amount, type='float', string='Total Budget',
                                                       digits_compute=dp.get_precision('Budget'),multi='_multi_get_total_budget',
                                                       store={
                                                              'account.analytic.account':(lambda self, cr, uid, ids, c={}: ids, ['kderp_budget_data_line'], 20),
-                                                             'kderp_demo_budget_data':(_get_job_budget_line, ['planned_amount','budget_id','account_analytic_id'], 20)}
+                                                             'kderp.demo.budget.data':(_get_job_budget_line, ['planned_amount','budget_id','account_analytic_id'], 20)}
                                                       )
                 }
                 
