@@ -23,7 +23,7 @@
 	           				<field name="res_name"/>
 	           			</group>
 	           			<!-- Attachment Quotation -->
-						<group string="Attached Info.">
+						<group string="Attached Info." attrs="{'invisible':[('res_model','!=','sale.order')]}">
 							<field name="q_attached" string="Quotation"/>
 							<group string='Quotation Budget'>
 								<field name="q_attached_be" string='Electrical'/>
