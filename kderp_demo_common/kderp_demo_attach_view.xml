@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>  
+		<record model="ir.ui.view" id="kderp_demo_attachment_form">
+       		<field name="name">kderp.demo.attachment.form</field>
+           	<field name="model">ir.attachment</field>
+           	<field name="type">form</field>
+           	<field name="priority">2</field>
+           	<field name="arch" type="xml">
+           		<form string="Attachment">
+           			<sheet>
+	           			<label for = "name" class="oe_edit_only"/>
+	           			<h1><field name="name" onchange="onchange_type(name)" select="1"/></h1>
+	           			<group string="Data" colspan="4" col="4">
+	           				<field name="type"/>
+	           				<field name="datas_fname" select="1" onchange="onchange_name(datas_fname)"/>
+	           				<field name="datas" filename="data_fname" attrs="{'invisible':[('type','=','url')]}" colspan="4" col="4"/>
+	           				<field name="url" widget="url" atts="{'invisible':[('type','=','binary')]}"/>
+	           			</group>
+	           			<group string="Attached To" invisible="1">
+	           				<field name="res_model"/>
+	           				<field name="res_id"/>
+	           				<field name="res_name"/>
+	           			</group>
+	           			<!-- Attachment Quotation -->
+						<group string="Attached Info.">
+							<field name="q_attached" string="Quotation"/>
+							<group string='Quotation Budget'>
+								<field name="q_attached_be" string='Electrical'/>
+								<field name="q_attached_bm" string='Mechanical'/>
+								<field name="q_attached_qcombine" string='Combine'/>
+							</group>
+							<group string='Job Budget'>
+								<field name="q_attached_je" string='Electrical'/>
+								<field name="q_attached_jm" string='Mechanical'/>
+								<field name="q_attached_jcombine" string='Combine'/>						
+							</group>
+						</group>
+           			</sheet>
+               	</form>
+           </field>
+        </record>
+        
+        <record model="ir.ui.view" id="kderp_demo_attachment_tree">
+            <field name="name">kderp.demo.attachment.tree</field>
+            <field name="model">ir.attachment</field>
+            <field name="type">tree</field>
+            <field name="priority">2</field>
+            <field name="arch" type="xml">
+                <tree string="Attachment">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        
+		<record model="ir.actions.act_window" id="action_attachment">
+			<field name="name">Attachment</field>
+			<field name="res_model">ir.attachment</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="kderp_demo_attachment_form"/>
+			<field name="target">new</field>
+		</record>
+    </data>
+</openerp>
+

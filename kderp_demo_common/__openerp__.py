@@ -8,6 +8,7 @@
     'category':"Test",
     'version':"0.1",
     'depends':['base'],
-    'data':['kderp_demo_location_view.xml'],
+    'data':['kderp_demo_location_view.xml',
+            'kderp_demo_attach_view.xml'],
     'demo':[],
 }
