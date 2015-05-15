@@ -40,7 +40,7 @@
                	</form>
            </field>
         </record>
-        
+         
         <record model="ir.ui.view" id="kderp_demo_attachment_tree">
             <field name="name">kderp.demo.attachment.tree</field>
             <field name="model">ir.attachment</field>
@@ -52,15 +52,15 @@
                 </tree>
             </field>
         </record>
-        
-		<record model="ir.actions.act_window" id="action_attachment">
-			<field name="name">Attachment</field>
-			<field name="res_model">ir.attachment</field>
-			<field name="view_type">form</field>
-			<field name="view_mode">form</field>
-			<field name="view_id" ref="kderp_demo_attachment_form"/>
-			<field name="target">new</field>
-		</record>
+         
+		<record id="action_attachment" model="ir.actions.act_window">
+            <field name="name">Attachment</field>
+            <field name="res_model">ir.attachment</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+           	<field name="view_id" ref="kderp_demo_attachment_form"/>
+           	<field name="target">new</field>
+        </record>
     </data>
 </openerp>
 
