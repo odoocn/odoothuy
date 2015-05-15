@@ -15,7 +15,7 @@
 	           				<field name="type"/>
 	           				<field name="datas_fname" select="1" onchange="onchange_name(datas_fname)"/>
 	           				<field name="datas" filename="data_fname" attrs="{'invisible':[('type','=','url')]}" colspan="4" col="4"/>
-	           				<field name="url" widget="url" atts="{'invisible':[('type','=','binary')]}"/>
+	           				<field name="url" widget="url" attrs="{'invisible':[('type','!=','url')]}"/>
 	           			</group>
 	           			<group string="Attached To" invisible="1">
 	           				<field name="res_model"/>
