@@ -3,6 +3,7 @@ from openerp.osv import fields, osv
 
 import openerp.addons.decimal_precision as dp
 import re
+from _socket import SOL_IP
 
 class demo_contract(osv.osv):
     _inherit = 'demo.contract'
@@ -74,6 +75,41 @@ class sale_order(Model):
             res.append(a.order_id.id)
         return res
     
+    def _get_quotation_attachment(self, cr, uid, ids, name, arg, context=None):
+        res = {}
+        if ids:
+            so_id_list = ",".join(map(str, ids))
+            cr.execute("""
+                        select 
+                            so.id,
+                            case when sum(case when coalesce(ia.q_attached,False) then 1 else 0 end) >0 then 1 else 0 end as q_attached,
+                            case when sum(case when coalesce(ia.q_attached_be, False) then 1 else 0 end) > 0 then 1 else 0 end as q_attached_be,
+                            case when sum(case when coalesce(ia.q_attached_bm, False) then 1 else 0 end) > 0 then 1 else 0 end as q_attached_bm,
+                            case when sum(case when coalesce(ia.q_attached_qcombine, False) then 1 else 0 end) > 0 then 1 else 0 end as q_attached_qcombine,
+                            case when sum(case when coalesce(ia.q_attached_je, False) then 1 else 0 end) > 0 then 1 else 0 end as q_attached_je,
+                            case when sum(case when coalesce(ia.q_attached_jm, False) then 1 else 0 end) > 0 then 1 else 0 end as q_attached_jm,
+                            case when sum(case when coalesce(ia.q_attached_jcombine, False) then 1 else 0 end) > 0 then 1 else 0 end q_attached_jcombine
+                        from 
+                            sale_order so
+                        left join 
+                            ir_attachment ia on ia.res_model='sale.order'
+                        where 
+                            so.id=res_id and
+                            so.id in (%s)
+                        group by 
+                            so.id
+                        """%(so_id_list))
+            for sol in cr.dictfetchall():
+                res[sol.pop('id')]=sol
+        return res
+    
+    def _get_attachment_link(self, cr, uid, ids, context=None):
+        res={}
+        for att_obj in self.pool.get('ir.attachment').browse(cr,uid,ids):
+            if att_obj.res_model=='sale.order' and att_obj.res_id:
+                res[att_obj.res_id] = True
+        return res.keys()
+    
     _defaults={
                 'company_id':'',
                 'name': _get_newcode,
@@ -106,7 +142,12 @@ class sale_order(Model):
        'description':fields.text('Desc.'),
        'remarks':fields.text('Remarks'),
        #Quotation Attachment Info
-       'q_attached':fields.boolean('Quotation'),    
+       'q_attached':fields.function(_get_quotation_attachment,method=True,string='Quotation',readonly=True,type='boolean',multi='quotation_attachment',
+                                     store={
+                                            'sale.order':(lambda self, cr, uid, ids, c={}: ids, None, 5),
+                                            'ir.attachment':(_get_attachment_link,['res_model','res_id','q_attached','q_attached_be','q_attached_bm','q_attached_qcombine',
+                                                                                    'q_attached_je','q_attached_jm','q_attached_jcombine'],20)}),  
+    # 'q_attached':fields.boolean('Quotation'),
        'q_attached_be':fields.boolean('Q.Budget Electrical'),
        'q_attached_bm':fields.boolean('Q.Budget Mechanical'),
        'q_attached_qcombine':fields.boolean('Q.Budget Combine'),
