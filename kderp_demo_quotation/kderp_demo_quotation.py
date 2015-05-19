@@ -92,9 +92,8 @@ class sale_order(Model):
                         from 
                             sale_order so
                         left join 
-                            ir_attachment ia on ia.res_model='sale.order'
+                            ir_attachment ia on ia.res_model='sale.order' and so.id=res_id
                         where 
-                            so.id=res_id and
                             so.id in (%s)
                         group by 
                             so.id
@@ -102,7 +101,7 @@ class sale_order(Model):
             for sol in cr.dictfetchall():
                 res[sol.pop('id')]=sol
         return res
-    
+     
     def _get_attachment_link(self, cr, uid, ids, context=None):
         res={}
         for att_obj in self.pool.get('ir.attachment').browse(cr,uid,ids):
@@ -143,14 +142,25 @@ class sale_order(Model):
        'remarks':fields.text('Remarks'),
        #Quotation Attachment Info
        'q_attached':fields.function(_get_quotation_attachment,method=True,string='Quotation',readonly=True,type='boolean',multi='quotation_attachment',
-                                     store={
-                                            'sale.order':(lambda self, cr, uid, ids, c={}: ids, None, 5),
-                                            'ir.attachment':(_get_attachment_link,['res_model','res_id','q_attached','q_attached_be','q_attached_bm','q_attached_qcombine',
-                                                                                    'q_attached_je','q_attached_jm','q_attached_jcombine'],20)}),  
-    # 'q_attached':fields.boolean('Quotation'),
-       'q_attached_be':fields.boolean('Q.Budget Electrical'),
-       'q_attached_bm':fields.boolean('Q.Budget Mechanical'),
-       'q_attached_qcombine':fields.boolean('Q.Budget Combine'),
+                                      store={
+                                             'sale.order':(lambda self, cr, uid, ids, c={}: ids, None, 5),
+                                             'ir.attachment':(_get_attachment_link,['res_model','res_id','q_attached','q_attached_be','q_attached_bm','q_attached_qcombine',
+                                                                                     'q_attached_je','q_attached_jm','q_attached_jcombine'],20)}),  
+       'q_attached_be':fields.function(_get_quotation_attachment,method=True,string='Q.Budget Electrical',readonly=True,type='boolean',multi='quotation_attachment',
+                                      store={
+                                             'sale.order':(lambda self, cr, uid, ids, c={}: ids, None, 5),
+                                             'ir.attachment':(_get_attachment_link,['res_model','res_id','q_attached','q_attached_be','q_attached_bm','q_attached_qcombine',
+                                                                                     'q_attached_je','q_attached_jm','q_attached_jcombine'],20)}),  
+       'q_attached_bm':fields.function(_get_quotation_attachment,method=True,string='Q.Budget Mechanical',readonly=True,type='boolean',multi='quotation_attachment',
+                                      store={
+                                             'sale.order':(lambda self, cr, uid, ids, c={}: ids, None, 5),
+                                             'ir.attachment':(_get_attachment_link,['res_model','res_id','q_attached','q_attached_be','q_attached_bm','q_attached_qcombine',
+                                                                                     'q_attached_je','q_attached_jm','q_attached_jcombine'],20)}), 
+       'q_attached_qcombine':fields.function(_get_quotation_attachment,method=True,string='Q.Budget Combine',readonly=True,type='boolean',multi='quotation_attachment',
+                                      store={
+                                             'sale.order':(lambda self, cr, uid, ids, c={}: ids, None, 5),
+                                             'ir.attachment':(_get_attachment_link,['res_model','res_id','q_attached','q_attached_be','q_attached_bm','q_attached_qcombine',
+                                                                                     'q_attached_je','q_attached_jm','q_attached_jcombine'],20)}),
        'q_budget_na':fields.boolean('N/A'),
        #Quotation Submit info
        'quotation_type':fields.selection([('E','Electrical'),('M','Mechenical'),('E/M','Electrical & Mechenical')], 'Quotation Type'),
@@ -177,9 +187,21 @@ class sale_order(Model):
        'summary_quotation_ids':fields.one2many('kderp.demo.summary.of.quotation', 'order_id', 'Summary of Quotation', readonly=True),
         #Working Budget
         #'ir.attachment':(_get_attachement_link,['res_model','res_id','q_attached','q_attached_be','q_attached_bm','q_attached_qcombine','q_attached_je','q_attached_jm','q_attached_jcombine'],20)}),
-        'q_attached_je':fields.boolean('J.Budget E.'),
-        'q_attached_jm':fields.boolean('J.Budget M.'),
-        'q_attached_jcombine':fields.boolean('J.Budget Combine'),
+        'q_attached_je':fields.function(_get_quotation_attachment,method=True,string='J.Budget E.',readonly=True,type='boolean',multi='quotation_attachment',
+                                      store={
+                                             'sale.order':(lambda self, cr, uid, ids, c={}: ids, None, 5),
+                                             'ir.attachment':(_get_attachment_link,['res_model','res_id','q_attached','q_attached_be','q_attached_bm','q_attached_qcombine',
+                                                                                     'q_attached_je','q_attached_jm','q_attached_jcombine'],20)}),
+        'q_attached_jm':fields.function(_get_quotation_attachment,method=True,string='J.Budget M.',readonly=True,type='boolean',multi='quotation_attachment',
+                                      store={
+                                             'sale.order':(lambda self, cr, uid, ids, c={}: ids, None, 5),
+                                             'ir.attachment':(_get_attachment_link,['res_model','res_id','q_attached','q_attached_be','q_attached_bm','q_attached_qcombine',
+                                                                                     'q_attached_je','q_attached_jm','q_attached_jcombine'],20)}),
+        'q_attached_jcombine':fields.function(_get_quotation_attachment,method=True,string='J.Budget Combine',readonly=True,type='boolean',multi='quotation_attachment',
+                                      store={
+                                             'sale.order':(lambda self, cr, uid, ids, c={}: ids, None, 5),
+                                             'ir.attachment':(_get_attachment_link,['res_model','res_id','q_attached','q_attached_be','q_attached_bm','q_attached_qcombine',
+                                                                                     'q_attached_je','q_attached_jm','q_attached_jcombine'],20)}),
         'quotation_job_budget_na':fields.boolean('N/A'),
         'total_working_budget':fields.float('W.B.Amt.(M&E)'),
         #Show tree view
