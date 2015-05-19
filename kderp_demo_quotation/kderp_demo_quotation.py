@@ -109,6 +109,11 @@ class sale_order(Model):
                 res[att_obj.res_id] = True
         return res.keys()
     
+    def _get_quotation_total(self, cr, uid, ids, name, args, context=None):
+        res = {}
+        for quo in self.browse(cr, uid, ids):
+            res[quo.id] = (quo.q_prj_budget_amount_e or 0.0) + (quo.q_prj_budget_amount_m or 0.0)
+        return res
     _defaults={
                 'company_id':'',
                 'name': _get_newcode,
@@ -203,7 +208,9 @@ class sale_order(Model):
                                              'ir.attachment':(_get_attachment_link,['res_model','res_id','q_attached','q_attached_be','q_attached_bm','q_attached_qcombine',
                                                                                      'q_attached_je','q_attached_jm','q_attached_jcombine'],20)}),
         'quotation_job_budget_na':fields.boolean('N/A'),
-        'total_working_budget':fields.float('W.B.Amt.(M&E)'),
+        'total_working_budget':fields.function(_get_quotation_total,string='W.B.Amt.(M&E)',method=True,type='float',
+                                               digits=(16,0), store={'sale.order':(lambda self, cr, uid, ids, c={}:ids, None, 20)}
+                                               ),
         #Show tree view
         'approved_amount_e':fields.function(_get_approved_amount_info, type='float', string='Approved E.', method=True,
                                              multi='_get_quotation_approved_info',digits_compute= dp.get_precision('Product Price'),
