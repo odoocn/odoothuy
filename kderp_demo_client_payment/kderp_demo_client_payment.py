@@ -1,10 +1,9 @@
 from openerp.osv import fields, osv
-class kderp_demo_client_payment(osv.osv):
-    _name = "kderp.demo.client.payment"
+class account_invoice(osv.osv):
+    _name = "account.invoice"
+    _inherit = ['mail.thread','account.invoice']
+    _description = 'Client Payment'
     _columns = {
-               'code' : fields.char("Code", required=True),
-               'name' : fields.char("Name of Industrial Park", required=True),
-               'city' : fields.char("City Province"),
+               'code' : fields.char("Code"),
                 }
-      
-kderp_demo_client_payment()
+account_invoice()

@@ -5,15 +5,13 @@
             
 		<record model="ir.ui.view" id="kderp_demo_client_payment_form">
        		<field name="name">kderp.demo.client.payment.form</field>
-           	<field name="model">kderp.demo.client.payment</field>
+           	<field name="model">account.invoice</field>
            	<field name="type">form</field>
            	<field name="arch" type="xml">
            		<form string="Demo Client Payment">
            			<sheet>
 	           			<group col="4" colspan="4">
 	           				<field name="code"/>
-	                    	<field name="name"/>
-	                    	<field name="city"/>
 	           			</group>
            			</sheet>
                	</form>
@@ -22,20 +20,18 @@
         
         <record model="ir.ui.view" id="kderp_demo_client_payment_tree">
             <field name="name">kderp.demo.client.payment.tree</field>
-            <field name="model">kderp.demo.client.payment</field>
+            <field name="model">account.invoice</field>
             <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Demo Client Payment">
                     <field name="code"/>
-                    <field name="name"/>
-                    <field name="city"/>
                 </tree>
             </field>
         </record>
         
 		<record model="ir.actions.act_window" id="action_kderp_demo_client_payment">
 			<field name="name">Demo Client Payment</field>
-			<field name="res_model">kderp.demo.client.payment</field>
+			<field name="res_model">account.invoice</field>
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 		</record>

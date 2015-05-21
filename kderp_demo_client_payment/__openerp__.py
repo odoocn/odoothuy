@@ -7,7 +7,7 @@
     'website':"",
     'category':"Test",
     'version':"0.1",
-    'depends':['base'],
+    'depends':['base','kderp_demo_job', 'kderp_demo_quotation'],
     'data':['kderp_demo_client_payment_view.xml',
             ],
     'demo':[],
