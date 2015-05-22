@@ -123,6 +123,7 @@ class demo_contract(Model):
         'demo_contract_summary_cur_ids':fields.one2many('demo.contract.cur','contract_id', string = 'Cur.', domain=[('default_curr','=',True)]),
         'quotation_lists':fields.function(_get_quotation_lists, relation='sale.order',type='one2many',string='Quotations List',method=True),
         'job_lists':fields.function(_get_job_lists, relation='account.analytic.account',type='one2many',string='Job List',method=True),
+        'progress_ids':fields.one2many('kderp.demo.progress.evaluation','contract_id','Progress'),
         }
 
 
