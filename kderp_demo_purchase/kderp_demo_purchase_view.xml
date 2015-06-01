@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+        <menuitem id="menu_demo_purchase_order" name="Demo Purchase Order" parent="kderp_demo_base.menu_kderp_demo_purchase_root" sequence="1" />
+            
+		<record model="ir.ui.view" id="kderp_demo_purchase_order_form">
+       		<field name="name">kderp.demo.purchase.order.form</field>
+           	<field name="model">purchase.order</field>
+           	<field name="type">form</field>
+           	<field name="arch" type="xml">
+           		<form string="Demo Purchase Order">
+           			<sheet>
+	           			<group col="4" colspan="4">
+	           				<field name="code"/>
+	           			</group>
+           			</sheet>
+               	</form>
+           </field>
+        </record>
+        
+        <record model="ir.ui.view" id="kderp_demo_purchase_order_tree">
+            <field name="name">kderp.demo.purchase.order.tree</field>
+            <field name="model">purchase.order</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Demo Purchase Order">
+                    <field name="code"/>
+                </tree>
+            </field>
+        </record>
+        
+		<record model="ir.actions.act_window" id="action_kderp_demo_purchase_order">
+			<field name="name">Demo Purchase Order</field>
+			<field name="res_model">purchase.order</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		
+		<menuitem name="Demo Purchase Order" id="sub_menu_demo_purchase_order" parent="menu_demo_purchase_order" sequence="30" action="action_kderp_demo_purchase_order"/>
+    </data>
+</openerp>
+
