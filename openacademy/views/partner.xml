@@ -28,7 +28,8 @@
         <menuitem id="contact_menu" name="Contacts"
                   parent="configuration_menu"
                   action="contact_list_action"/>
-        <record model="ir.actions.act_window" id="contact_cat_list_action">
+		
+		 <record model="ir.actions.act_window" id="contact_cat_list_action">
             <field name="name">Contact Tags</field>
             <field name="res_model">res.partner.category</field>
             <field name="view_mode">tree,form</field>
@@ -42,6 +43,6 @@
         </record>
         <record model="res.partner.category" id="teacher2">
             <field name="name">Teacher / Level 2</field>
-        </record>        
+        </record>                 
     </data>
 </openerp>

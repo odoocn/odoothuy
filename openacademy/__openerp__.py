@@ -21,19 +21,18 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'board', 'website'],
+    'depends': ['base', 'board'],
 
     # always loaded
     'data': [
         'security/security.xml',
-        'security/ir.model.access.csv',
-        'templates.xml',
+        'security/ir.model.access.csv',        
         'views/openacademy.xml',
         'views/partner.xml',
         'views/session_workflow.xml',
-        'views/session_board.xml',
-        'reports.xml',
-        'templates.xml'
+        'templates.xml',
+        'report.xml',
+        'views/session_board.xml'
     ],
     # only loaded in demonstration mode
     'demo': [
