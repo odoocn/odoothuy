@@ -1,0 +1,78 @@
+<openerp>
+	<data>
+		<record id="action_kderp_demo_web_teachers" model="ir.actions.act_window">
+			<field name="name">kderp Demo Web teachers</field>
+			<field name="res_model">kderp_demo_web.teachers</field>
+		</record>
+		
+		<record id="kderp_demo_web_teacher_form" model="ir.ui.view">
+		    <field name="name">kderp Demo Web teachers: form</field>
+		    <field name="model">kderp_demo_web.teachers</field>
+		    <field name="arch" type="xml">
+		      <form>
+		        <sheet>
+		          <label for="name"/> 
+		          <field name="name"/>
+		          <label for="biography"/>
+		          <field name="biography"/>
+		        </sheet>
+		      </form>
+		    </field>
+		</record>
+		
+	  	<record id="action_kderp_demo_web_courses" model="ir.actions.act_window">
+		    <field name="name">Kderp Demo Web courses</field>
+		    <field name="res_model">kderp_demo_web.courses</field>
+	  	</record>
+	  	<record id="kderp_demo_web_course_search" model="ir.ui.view">
+		    <field name="name">Kderp Demo Web courses: search</field>
+		    <field name="model">kderp_demo_web.courses</field>
+		    <field name="arch" type="xml">
+		      <search>
+		        <field name="name"/>
+		        <field name="teacher_id"/>
+		      </search>
+		    </field>
+	  	</record>
+	  	
+	  	<record id="kderp_demo_web_course_list" model="ir.ui.view">
+		    <field name="name">Kderp Demo Web courses: list</field>
+		    <field name="model">kderp_demo_web.courses</field>
+		    <field name="arch" type="xml">
+		      <tree string="Courses">
+		        <field name="name"/>
+		        <field name="teacher_id"/>
+		      </tree>
+		    </field>
+	  	</record>
+	  	
+	  	<record id="kderp_demo_web_course_form" model="ir.ui.view">
+		    <field name="name">Kderp Demo Web courses: form</field>
+		    <field name="model">kderp_demo_web.courses</field>
+		    <field name="arch" type="xml">
+		      <form>
+		        <sheet>
+		          <label for="name"/>
+		          <field name="name"/>
+		          <label for="teacher_id"/>
+		          <field name="teacher_id"/>
+		        </sheet>
+		      </form>
+		    </field>
+	  	</record>
+		
+		<menuitem sequence="0" id="menu_kderp_demo_web" name="Kderp Demo Web"/>
+		<menuitem id="menu_kderp_demo_web_content" 
+					parent="menu_kderp_demo_web"
+					name="kderp Demo Web content"/>
+					
+		<menuitem id="menu_kderp_demo_web_content_teachers"
+					parent="menu_kderp_demo_web_content"
+					action="action_kderp_demo_web_teachers"/>
+					
+		<menuitem id="menu_kderp_demo_web_content_courses"
+            		parent="menu_kderp_demo_web_content"
+            		action="action_kderp_demo_web_courses"/>
+		
+	</data>
+</openerp>

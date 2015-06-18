@@ -1,0 +1,65 @@
+<openerp>
+    <data>
+    	<!-- 
+        <template id="index">
+            <title>Academy</title>
+            <t t-foreach="teachers" t-as="teacher">
+              <p><t t-esc="teacher"/></p>
+            </t>
+        </template>
+         -->
+         <!-- 
+         <template id="index">
+         	<title>Academy</title>
+         	<t t-foreach="teachers" t-as="teacher">
+         		<p>
+         			<t t-esc="teacher.id"/>
+         			<t t-esc="teacher.name"/>
+         		</p>
+         	</t>
+         </template>
+          -->
+    	<template id="index">
+    		<t t-call="website.layout">
+    			<t t-set="title">Academy</t>
+    			<div class="oe_structure">
+    				<div class="container">
+    					<t t-foreach="teachers" t-as="teacher">
+    						<!-- 
+    						<p>
+    							<t t-esc="teacher.id"/>
+    							<t t-esc="teacher.name"/>
+    						</p>
+    						 -->
+    						<p>
+    							<a t-attf-href="/academy/{{ slug(teacher) }}"/>
+    							<t t-esc="teacher.name"/>
+    						</p>
+    					</t>
+    				</div>
+    			</div>
+    		</t>
+    		
+    	</template>
+    	<template id="biography">
+    		<t t-call="website.layout">
+    			<t t-set="title">Academy</t>
+    			<div class="oe_structure"/>
+    			<div class="oe_structure">
+    				<div class="container">
+    					<!-- <p><t t-esc="person.id"/>
+    						<t t-esc="person.name"/>
+    						</p>
+    					 -->
+    					 <h3><t t-esc="person.name"/></h3>
+    					 <p>Last modified: <i t-field="person.write_date"/></p>
+    					 <!-- <p>Last modified: <i t-field="person.write_date" t-field-options='{"format":"long"}'/></p> -->
+    					 <!-- <p>Last modified: <i t-field="person.write_date" t-field-options='{"widget": "relative"}'/></p> -->
+    					 <div><t t-esc="person.biography"/></div>
+    				</div>
+    			</div>
+    			<div class="oe_structure"/>
+    		</t>
+    	</template>
+    </data>
+</openerp>
