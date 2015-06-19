@@ -11,6 +11,7 @@ class Teacher(models.Model):
 
 class Courses(models.Model):
     _name = 'kderp_demo_web.courses'
+    _inherit = 'mail.thread'
     
     name = fields.Char()
     teacher_id = fields.Many2one('kderp_demo_web.teachers', string="Teacher")
