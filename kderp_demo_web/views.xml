@@ -15,6 +15,13 @@
 		          <field name="name"/>
 		          <label for="biography"/>
 		          <field name="biography"/>
+		          
+		          <field name="course_ids">
+		            <tree string="Courses" editable="bottom">
+		              <field name="name"/>
+		            </tree>
+		          </field>
+				          
 		        </sheet>
 		      </form>
 		    </field>

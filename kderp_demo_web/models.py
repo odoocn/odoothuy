@@ -7,6 +7,8 @@ class Teacher(models.Model):
     name = fields.Char()
     biography = fields.Html()
 
+    course_ids = fields.One2many('kderp_demo_web.courses', 'teacher_id', string="Courses")
+
 class Courses(models.Model):
     _name = 'kderp_demo_web.courses'
     
