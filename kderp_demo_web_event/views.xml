@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+        <record id="action_kderp_demo_web_event" model="ir.actions.act_window">
+			<field name="name">kderp Demo Web teachers</field>
+			<field name="res_model">kderp.demo.web.event</field>
+		</record>
+		
+		<record model="ir.ui.view" id="kderp_demo_web_event_form">
+       		<field name="name">kderp.demo.web.event.form</field>
+           	<field name="model">kderp.demo.web.event</field>
+           	<field name="type">form</field>
+           	<field name="arch" type="xml">
+           		<form string= "KDERP Demo">
+           			<group colspan="4" col="4">
+           				<field name="code"/>
+                    	<field name="name"/>
+                    	<field name="date"/>
+           			</group>
+               	</form>
+           </field>
+        </record>
+        
+        <record model="ir.ui.view" id="kderp_demo_web_event_tree">
+            <field name="name">kderp.demo.web.event.tree</field>
+            <field name="model">kderp.demo.web.event</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="KDERP Demo">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="date"/>
+                </tree>
+            </field>
+        </record>
+        
+		<record model="ir.actions.act_window" id="action_kderp_demo">
+			<field name="name">Kdep Demo</field>
+			<field name="res_model">kderp.demo.web.event</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		<!--  -->
+		<menuitem sequence="5" id="menu_kderp_demo_web_event" name="Kderp Demo Web Event"/>
+		<menuitem id="menu_kderp_demo_web_event_content" 
+					parent="menu_kderp_demo_web_event"
+					name="kderp Demo Web Event Content"/>
+					
+		<menuitem id="menu_kderp_demo_web_event_content_teachers"
+					parent="menu_kderp_demo_web_event_content"
+					action="action_kderp_demo_web_event"/>
+    
+    </data>
+</openerp>
+
