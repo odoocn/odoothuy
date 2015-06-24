@@ -14,15 +14,19 @@
 									    font-size: 12px;
 									    margin: 0px 15px 0px 0px;
 									    font-weight: normal;
-									    width: 80px;
+									    width: 50px;
+									   	height:45px;
 									    float: left;
-									    text-align: center;"><t t-esc="name_a.date"/></p>
+									    text-align: center;
+									    border-bottom: 1px solid #FFF;"><span t-field="name_a.date" t-field-options='{"format": "MMM, d y"}'/></p>
 								<p style="background: #D4D4D4;
 										font-weight: normal;
 										margin-bottom: 0px;
-										color: #FFF;
+										color: #737373;
 										font-size: 12px;
 										padding: 6px;
+										height:45px;
+										padding: 7px;
 										border-bottom: 1px solid #FFF;"> <t t-esc="name_a.name"/></p>
 							</t>
 						</div>
