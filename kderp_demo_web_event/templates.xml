@@ -5,20 +5,27 @@
 			<title>Demo Web Event</title>
 				<div class="container">
 					<div class="row">
-						<t t-foreach="name_a" t-as="name_a">
-							<p style="background: #11A84E none repeat scroll 0% 0%;
-							    	padding: 6px;
-							    	color: #FFF;
-								    font-size: 12px;
-								    margin: 0px 15px 0px 0px;
-								    font-weight: normal;
-								    width: 80px;
-								    height:30px;
-								    float: left;
-								    border-bottom: 1px solid #FFF;
-								    text-align: center;"><t t-esc="name_a.date"/></p>
-							<p> <t t-esc="name_a.name"/></p>
-						</t>
+						<div class ="col-md-3">
+							<h3 style="color: #5190CC;">Event News</h3>
+							<t t-foreach="name_a" t-as="name_a">
+								<p style="background: #11A84E none repeat scroll 0% 0%;
+								    	padding: 6px;
+								    	color: #FFF;
+									    font-size: 12px;
+									    margin: 0px 15px 0px 0px;
+									    font-weight: normal;
+									    width: 80px;
+									    float: left;
+									    text-align: center;"><t t-esc="name_a.date"/></p>
+								<p style="background: #D4D4D4;
+										font-weight: normal;
+										margin-bottom: 0px;
+										color: #FFF;
+										font-size: 12px;
+										padding: 6px;
+										border-bottom: 1px solid #FFF;"> <t t-esc="name_a.name"/></p>
+							</t>
+						</div>
 					</div>
 				</div>
 		</t>
