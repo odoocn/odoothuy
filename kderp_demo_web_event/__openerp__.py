@@ -13,7 +13,8 @@
     'depends': ['base', 'board','website'],
     # always loaded
     'data': [ 
-             'views.xml'
+             'views.xml',
+             'templates.xml'
     ],
     'demo':[
            ]
