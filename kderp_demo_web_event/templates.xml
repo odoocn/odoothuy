@@ -31,8 +31,8 @@
 							</t>
 						</div>
 						<div class="col-md-3"> 
-							<h5 ><a href="#"> Electrical</a></h5> 
-							<div class ="thumbnail" style="border: None;">
+							<h5><a href="#"> Electrical</a></h5> 
+							<div class ="thumbnail">
 								<a href="#"><img src ="http://goo.gl/0sX3jq" width="1068" height="720"/></a>
 							</div>
 							<a href="#"><p style="padding: 6px;
@@ -41,10 +41,15 @@
 											    color: #B7B7B7;
 											    font-size: 12px;
 											    width:75px">View More</p></a>
+    						<a href="#"><p style="border-top: 1px dotted #999; 
+    											margin-top: 20px;
+    											padding-top: 10px;
+    											color: #999;
+    											font-size: 11px;">Data is updating</p></a>
 						</div> 
 						<div class="col-md-3" >  
 							<h5><a href="#"> Mechanical</a></h5>
-							<div class ="thumbnail" style="border: None">
+							<div class ="thumbnail">
 								<a href="#"><img src ="http://goo.gl/an2HXY" width="1068" height="720"/></a>
 							</div>
 							<a href="#"><p style="padding: 6px;
@@ -56,7 +61,7 @@
 						</div>
 						<div class="col-md-3"> 
 							<h5><a href="#"> Safety</a></h5> 
-							<div class ="thumbnail" style="border: None">
+							<div class ="thumbnail">
 								<a href="#"><img src ="http://goo.gl/Av1pac" width="1068" height="720"/></a>
 							</div>
 							<a href="#"><p style="padding: 6px;
