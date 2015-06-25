@@ -13,8 +13,9 @@
     'depends': ['base', 'board','website'],
     # always loaded
     'data': [ 
+             'security/ir.model.access.csv',
              'views.xml',
-             'templates.xml'
+             'templates.xml',
     ],
     'demo':[
            ]
