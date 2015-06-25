@@ -5,5 +5,5 @@ class kderp_demo_web_event(http.Controller):
     def index(self, **kw):
         names_var = http.request.env['kderp.demo.web.event']
         return http.request.render('kderp_demo_web_event.index',{
-            'name_a' : names_var.search([])
+            'name_a' : names_var.search([],limit=5)
                                                                  })
