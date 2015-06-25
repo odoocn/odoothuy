@@ -58,6 +58,11 @@
 											    color: #B7B7B7;
 											    font-size: 12px;
 											    width:75px">View More</p></a>
+							<a href="#"><p style="border-top: 1px dotted #999; 
+    											margin-top: 20px;
+    											padding-top: 10px;
+    											color: #999;
+    											font-size: 11px;">Data is updating</p></a>
 						</div>
 						<div class="col-md-3"> 
 							<h5><a href="#"> Safety</a></h5> 
@@ -70,6 +75,11 @@
 											    color: #B7B7B7;
 											    font-size: 12px;
 											    width:75px">View More</p></a>
+							<a href="#"><p style="border-top: 1px dotted #999; 
+    											margin-top: 20px;
+    											padding-top: 10px;
+    											color: #999;
+    											font-size: 11px;">Data is updating</p></a>
 						</div>
 					</div>
 				</div>
