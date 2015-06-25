@@ -4,7 +4,7 @@
 		<t t-call="website.layout">
 			<title>Demo Web Event</title>
 				<!-- Slider -->
-				<div class="jumbotron" style="padding: 0px; height:300px">
+				<div class="jumbotron" style="padding: 0px; height:350px">
 					<div id="myCarousel" class="carousel slide" data-ride="carousel">
 						<!-- Indicators -->
 						<ol class="carousel-indicators">
@@ -17,16 +17,16 @@
 						<!-- Wrapper for slides -->
 						<div class="carousel-inner" role="listbox">
 							<div class="item active">
-								<img src="http://goo.gl/0sX3jq" style="width: 100%;height:300px"/>
+								<img src="http://goo.gl/0sX3jq" style="width: 100%;height:350px"/>
 							</div>
 							<div class="item">
-								<img src="http://goo.gl/an2HXY" style="width: 100%;height:300px"/>
+								<img src="http://goo.gl/an2HXY" style="width: 100%;height:350px"/>
 							</div>
 							<div class="item">
-								<img src="http://goo.gl/Av1pac" style="width: 100%;height:300px"/>
+								<img src="http://goo.gl/Av1pac" style="width: 100%;height:350px"/>
 							</div>
 							<div class="item">
-								<img src="http://goo.gl/vw43v1" style="width: 100%;height:300px"/>
+								<img src="http://goo.gl/vw43v1" style="width: 100%;height:350px"/>
 							</div>
 						</div>
 						<!-- Left and right controls -->
