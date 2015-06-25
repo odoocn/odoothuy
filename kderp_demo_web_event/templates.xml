@@ -6,7 +6,7 @@
 				<div class="container">
 					<div class="row">
 						<div class ="col-md-3">
-							<h3 style="color: #5190CC;">Event News</h3>
+							<h5 style="color: #5190CC;">Event News</h5>
 							<t t-foreach="name_a" t-as="name_a">
 								<p style="background: #11A84E none repeat scroll 0% 0%;
 								    	padding: 6px;
@@ -29,6 +29,42 @@
 										padding: 7px;
 										border-bottom: 1px solid #FFF;"> <t t-esc="name_a.name"/></p>
 							</t>
+						</div>
+						<div class="col-md-3"> 
+							<h5 ><a href="#"> Electrical</a></h5> 
+							<div class ="thumbnail" style="border: None;">
+								<a href="#"><img src ="http://goo.gl/0sX3jq" width="1068" height="720"/></a>
+							</div>
+							<a href="#"><p style="padding: 6px;
+											    background: #FFF none repeat scroll 0% 0%;
+											    border: 1px solid #E5E5E5;
+											    color: #B7B7B7;
+											    font-size: 12px;
+											    width:75px">View More</p></a>
+						</div> 
+						<div class="col-md-3" >  
+							<h5><a href="#"> Mechanical</a></h5>
+							<div class ="thumbnail" style="border: None">
+								<a href="#"><img src ="http://goo.gl/an2HXY" width="1068" height="720"/></a>
+							</div>
+							<a href="#"><p style="padding: 6px;
+											    background: #FFF none repeat scroll 0% 0%;
+											    border: 1px solid #E5E5E5;
+											    color: #B7B7B7;
+											    font-size: 12px;
+											    width:75px">View More</p></a>
+						</div>
+						<div class="col-md-3"> 
+							<h5><a href="#"> Safety</a></h5> 
+							<div class ="thumbnail" style="border: None">
+								<a href="#"><img src ="http://goo.gl/Av1pac" width="1068" height="720"/></a>
+							</div>
+							<a href="#"><p style="padding: 6px;
+											    background: #FFF none repeat scroll 0% 0%;
+											    border: 1px solid #E5E5E5;
+											    color: #B7B7B7;
+											    font-size: 12px;
+											    width:75px">View More</p></a>
 						</div>
 					</div>
 				</div>
