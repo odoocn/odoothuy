@@ -16,6 +16,7 @@
            				<field name="code"/>
                     	<field name="name"/>
                     	<field name="date"/>
+                    	<field name="description"/>
            			</group>
                	</form>
            </field>
@@ -30,6 +31,7 @@
                     <field name="code"/>
                     <field name="name"/>
                     <field name="date"/>
+                    <field name="description"/>
                 </tree>
             </field>
         </record>

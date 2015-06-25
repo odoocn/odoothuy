@@ -9,5 +9,6 @@ class kderp_demo_web_event(osv.osv):
                'code' : fields.char("Code"),
                'name' : fields.char("Name"),
                'date' : fields.date("Date"),
+               'description' : fields.text("Description"),
                 }
 kderp_demo_web_event()
