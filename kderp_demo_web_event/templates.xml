@@ -17,16 +17,16 @@
 						<!-- Wrapper for slides -->
 						<div class="carousel-inner" role="listbox">
 							<div class="item active">
-								<img src="http://goo.gl/0sX3jq" style="width: 100%;height:350px"/>
+								<img src="https://dl.dropboxusercontent.com/u/100360973/barner/sl5.jpg" style="width: 100%;height:350px"/>
 							</div>
 							<div class="item">
-								<img src="http://goo.gl/an2HXY" style="width: 100%;height:350px"/>
+								<img src="https://dl.dropboxusercontent.com/u/100360973/barner/slide6.jpg" style="width: 100%;height:350px"/>
 							</div>
 							<div class="item">
-								<img src="http://goo.gl/Av1pac" style="width: 100%;height:350px"/>
+								<img src="https://dl.dropboxusercontent.com/u/100360973/barner/sl3.jpg" style="width: 100%;height:350px"/>
 							</div>
 							<div class="item">
-								<img src="http://goo.gl/vw43v1" style="width: 100%;height:350px"/>
+								<img src="https://dl.dropboxusercontent.com/u/100360973/barner/sl6.jpg" style="width: 100%;height:350px"/>
 							</div>
 						</div>
 						<!-- Left and right controls -->
@@ -73,7 +73,7 @@
 							<h5><a href="#"> Electrical</a></h5> 
 							<p></p>
 							<div class ="thumbnail">
-								<a href="#"><img src ="http://goo.gl/0sX3jq" width="1068" height="720"/></a>
+								<a href="#"><img src ="/website/static/src/img/library/world.jpg" width="1068" height="720"/></a>
 							</div>
 							<a href="#"><p style="padding: 6px;
 											    background: #FFF none repeat scroll 0% 0%;
@@ -91,7 +91,7 @@
 							<h5><a href="#"> Mechanical</a></h5>
 							<p></p>
 							<div class ="thumbnail">
-								<a href="#"><img src ="http://goo.gl/an2HXY" width="1068" height="720"/></a>
+								<a href="#"><img src ="/website/static/src/img/library/engineer.jpg" width="1068" height="720"/></a>
 							</div>
 							<a href="#"><p style="padding: 6px;
 											    background: #FFF none repeat scroll 0% 0%;
@@ -109,7 +109,7 @@
 							<h5><a href="#"> Safety</a></h5> 
 							<p></p>
 							<div class ="thumbnail">
-								<a href="#"><img src ="http://goo.gl/Av1pac" width="1068" height="720"/></a>
+								<a href="#"><img src ="/website/static/src/img/library/business_hands.jpg" width="1068" height="720"/></a>
 							</div>
 							<a href="#"><p style="padding: 6px;
 											    background: #FFF none repeat scroll 0% 0%;
