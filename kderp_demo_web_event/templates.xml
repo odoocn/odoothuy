@@ -126,8 +126,9 @@
 					</div>
 				</div>
 				<p></p>
+				<p></p>		
 				<p></p>
-				<p></p>
+				<div class="container" style="border-bottom: 5px solid #11A84E;"/>
 		</t>
 	</template>
 </data>
