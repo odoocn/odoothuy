@@ -26,5 +26,10 @@
 	            </style>
 			</xpath>
         </template>
+        <template id="website_footer_default_test" inherit_id="website.footer_default">
+            <xpath expr="//div[@class='container hidden-print']" position="before">
+            	<p></p>
+			</xpath>
+        </template>
     </data>
 </openerp>
