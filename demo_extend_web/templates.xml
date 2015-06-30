@@ -15,10 +15,12 @@
             </xpath>
         </template>
         -->
-        <template id="website_layout_test" inherit_id="website.layout" name="Script google analytic">
+        <!-- 
+        <template id="website_layout_test" inherit_id="website.layout">
             <xpath expr='//header' position="after">
 				<p>Test extend</p>
             </xpath>
         </template>
+         -->
     </data>
 </openerp>
