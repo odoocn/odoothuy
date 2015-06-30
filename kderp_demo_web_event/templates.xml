@@ -44,8 +44,7 @@
 				<div class="container">
 					<div class="row">
 						<div class ="col-md-3">
-							<h5 style="color: #5190CC;">Event News</h5>
-							<p></p>
+							<h5 style="color: #5190CC;">Event News</h5><br/>
 							<t t-foreach="name_a" t-as="name_a">
 								<p style="background: #11A84E none repeat scroll 0% 0%;
 								    	padding: 6px;
@@ -53,11 +52,11 @@
 									    font-size: 12px;
 									    margin: 0px 15px 0px 0px;
 									    font-weight: normal;
-									    width: 50px;
+									    width: 60px;
 									   	height:45px;
 									    float: left;
 									    text-align: center;
-									    border-bottom: 1px solid #FFF;"><span t-field="name_a.date" t-field-options='{"format": "MMM, d y"}'/></p>
+									    border-bottom: 1px solid #FFF;"><span t-field="name_a.date" t-field-options='{"format": "MMM, dd y"}'/></p>
 								<p style="background: #D4D4D4;
 										font-weight: normal;
 										margin-bottom: 0px;
@@ -70,8 +69,7 @@
 							</t>
 						</div>
 						<div class="col-md-3"> 
-							<h5><a href="#"> Electrical</a></h5> 
-							<p></p>
+							<h5><a href="#"> Electrical</a></h5><br/>
 							<div class ="thumbnail">
 								<a href="#"><img src ="/website/static/src/img/library/world.jpg" width="1068" height="720"/></a>
 							</div>
@@ -88,8 +86,7 @@
     											font-size: 11px;">Data is updating</p></a>
 						</div> 
 						<div class="col-md-3" >  
-							<h5><a href="#"> Mechanical</a></h5>
-							<p></p>
+							<h5><a href="#"> Mechanical</a></h5><br/>
 							<div class ="thumbnail">
 								<a href="#"><img src ="/website/static/src/img/library/engineer.jpg" width="1068" height="720"/></a>
 							</div>
@@ -106,8 +103,7 @@
     											font-size: 11px;">Data is updating</p></a>
 						</div>
 						<div class="col-md-3"> 
-							<h5><a href="#"> Safety</a></h5> 
-							<p></p>
+							<h5><a href="#"> Safety</a></h5><br/>
 							<div class ="thumbnail">
 								<a href="#"><img src ="/website/static/src/img/library/business_hands.jpg" width="1068" height="720"/></a>
 							</div>
