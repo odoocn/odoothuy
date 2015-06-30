@@ -18,6 +18,12 @@
         <template id="website_layout_test" inherit_id="website.layout">
             <xpath expr="//t[@t-call-assets='website.assets_frontend']" position="after">
 				<link href="/demo_extend_web/static/src/css/demo_extend_web.css" rel="stylesheet" type="text/css"/>
+				<style>
+	                .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
+	                  color: #555;
+	                  background-color: #FFFFFF;
+	                }
+	            </style>
 			</xpath>
         </template>
     </data>
