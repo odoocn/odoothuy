@@ -15,12 +15,10 @@
             </xpath>
         </template>
         -->
-        <!-- 
         <template id="website_layout_test" inherit_id="website.layout">
-            <xpath expr='//header' position="after">
-				<p>Test extend</p>
-            </xpath>
+            <xpath expr="//t[@t-call-assets='website.assets_frontend']" position="after">
+				<link href="/demo_extend_web/static/src/css/demo_extend_web.css" rel="stylesheet" type="text/css"/>
+			</xpath>
         </template>
-         -->
     </data>
 </openerp>
