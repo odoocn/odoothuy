@@ -4,8 +4,8 @@ from openerp import models, fields, api
 class Teacher(models.Model):
     _name = 'kderp_demo_web.teachers'
     
-    name = fields.Char()
-    biography = fields.Html()
+    name = fields.Char(translate=True)
+    biography = fields.Html(translate=True)
 
     course_ids = fields.One2many('kderp_demo_web.courses', 'teacher_id', string="Courses")
 
