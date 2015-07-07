@@ -3,7 +3,7 @@ import time
 
 class kderp_demo_web_event(osv.osv):
     _name = "kderp.demo.web.event"
-    _order = "id desc"
+    _order = "date desc"
     
     _columns = {
                'code' : fields.char("Code"),
