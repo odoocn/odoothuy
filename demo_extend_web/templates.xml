@@ -15,7 +15,7 @@
             </xpath>
         </template>
         -->
-        <template id="website_layout_test" inherit_id="website.layout">
+        <template id="website_layout_extend_header" inherit_id="website.layout">
             <xpath expr="//t[@t-call-assets='website.assets_frontend']" position="after">
 				<link href="/demo_extend_web/static/src/css/demo_extend_web.css" rel="stylesheet" type="text/css"/>
 				<style>
@@ -30,7 +30,7 @@
 	            </style>
 			</xpath>
         </template>
-        <template id="website_footer_default_test" inherit_id="website.footer_default">
+        <template id="website_layout_extend_footer" inherit_id="website.footer_default">
             <xpath expr="//div[@class='container hidden-print']" position="before">
             	<p></p>
 			</xpath>
