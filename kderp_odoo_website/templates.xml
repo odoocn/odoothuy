@@ -1,0 +1,10 @@
+<openerp>
+    <data>
+    	<template id="inherit_blog_header2" inherit_id="website_blog.latest_blogs">
+		    <xpath expr="//div[@class='alert alert-warning alert-dismissable mt16']" position="replace">
+		   	</xpath>
+		    <xpath expr="//div[@class='col-md-12 text-center']" position="replace">
+		   	</xpath>
+		</template>
+    </data>
+</openerp>
