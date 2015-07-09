@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+        <!-- page list view  -->
+        <record model="ir.ui.view" id="view_kderp_odoo_website_blog_post_list">
+            <field name="name">odoo.website.blog.post.list</field>
+            <field name="model">blog.post</field>
+            <field name="arch" type="xml">
+                <tree string="Blog Posts">
+                    <field name="name"/>
+                    <field name="write_date"/>
+                    <field name="subtitle"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="view_kderp_odoo_website_blog_post_form">
+            <field name="name">odoo.website.blog.post.form</field>
+            <field name="model">blog.post</field>
+            <field name="priority" eval="10" />
+            <field name="arch" type="xml">
+                <form string="Blog Post">
+                    <sheet>
+                        <group>
+                            <field name="name" placeholder="Name"/>
+                            <field name="subtitle" placeholder="Blog Subtitle"/>
+                            <field name="blog_id"/>
+                            <field name="write_date"/>
+                            <field name="website_published"/>
+                            <field name="content"/>
+                        </group>
+                   	</sheet>
+                </form>
+            </field>
+        </record>
+        
+		<!-- action -->
+		<record id="action_kderp_odoo_website_blog_port" model="ir.actions.act_window">
+		    <field name="name">Odoo Website</field>
+		    <field name="res_model">blog.post</field>
+	  	</record>
+	  	
+	  	<!-- menu -->
+		<menuitem sequence="0" id="menu_kderp_odoo_website" name="Odoo Website"/>
+		
+		<menuitem id="menu_kderp_odoo_website_content" 
+					parent="menu_kderp_odoo_website"
+					name="Odoo Website"/>
+					
+		<menuitem id="menu_kderp_odoo_website_content_blog_port"
+            		parent="menu_kderp_odoo_website_content"
+            		action="action_kderp_odoo_website_blog_port"/>
+    </data>
+</openerp>
+
