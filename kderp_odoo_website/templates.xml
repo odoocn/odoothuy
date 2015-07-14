@@ -6,5 +6,9 @@
 		    <xpath expr="//div[@class='col-md-12 text-center']" position="replace">
 		   	</xpath>
 		</template>
+		<template id="inherit_blog_complete" inherit_id="website_blog.blog_post_complete">
+		    <xpath expr="//div[@class='cover cover_footer mb0 text-center']" position="replace">
+		   	</xpath>
+		</template>
     </data>
 </openerp>
