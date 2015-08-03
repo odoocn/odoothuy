@@ -6,9 +6,17 @@
 		    <xpath expr="//div[@class='col-md-12 text-center']" position="replace">
 		   	</xpath>
 		</template>
-		<template id="inherit_blog_complete" inherit_id="website_blog.blog_post_complete">
-		    <xpath expr="//div[@class='cover cover_footer mb0 text-center']" position="replace">
+		
+		<template id="inherit_blog_complete" inherit_id="website_blog.opt_blog_post_complete_tags">
+		    <xpath expr="//div[@class='cover js_fullheight']" position="replace">
+		   	</xpath>
+		   	<xpath expr="//div[@class='cover cover_footer mb0 text-center']" position="replace">
+		   	</xpath>
+		   	<xpath expr="//div[@id='blog_content']" position="before">
+		   		<h1 t-field="blog_post.name" id="blog_post_name" t-att-data-blog-id="blog_post.id"/>
+            	<h2 t-field="blog_post.subtitle"/>
 		   	</xpath>
 		</template>
+
     </data>
 </openerp>
