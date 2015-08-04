@@ -25,6 +25,7 @@
                             <field name="name" placeholder="Name"/>
                             <field name="subtitle" placeholder="Blog Subtitle"/>
                             <field name="blog_id"/>
+                            <field name="tag_ids" widget="many2many_tags"/>
                             <field name="write_date"/>
                             <field name="website_published"/>
                             <field name="content"/>
