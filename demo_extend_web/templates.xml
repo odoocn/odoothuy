@@ -31,8 +31,88 @@
 			</xpath>
         </template>
         <template id="website_layout_extend_footer" inherit_id="website.footer_default">
+            <!-- 
             <xpath expr="//div[@class='container hidden-print']" position="before">
             	<p></p>
+			</xpath>
+			 -->
+			<xpath expr="//div[@class='container hidden-print']" position="replace">
+				<div class="container hidden-print">
+					<p></p>
+            		<div class="row">
+                		<div class="col-md-3">
+                			<h4>Head Office</h4>
+                			<p>
+                				15F, CMC Tower, Duy Tan Street, Dich Vong Hau Ward,<br/>
+								Cau Giay District, Hanoi<br/>
+								Tel: (84-4) 3934 2535 * Fax: (84-4) 3934 2537
+							</p>
+                		</div>
+                		<div class="col-md-3"/>
+                		<div class="col-md-3"/>
+                		<div class="col-md-3">
+                			<h4>Ho Chi Minh City Branch</h4>
+                			<p>
+                				3F, Saigon Riverside Office Center,<br/>
+								2A-4A Ton Duc Thang, Dist.1, Ho Chi Minh City<br/>
+								Tel: (84-8) 3933 0121 * Fax: (84-8) 3933 0150
+							</p>
+                		</div>
+                	</div>
+                	<p></p>
+                	<div class="row">
+                		<div class="col-md-4">
+                			<h4>Thang Long Office</h4>
+                			<p>
+                				R.m 106-108 Techno-Center, Thang Long Industrial Park,<br/>
+								Dong Anh Dist., Hanoi City<br/>
+								Tel: (84-4) 3881 1695 * Fax: (84-4) 3881 1694
+							</p>
+                		</div>
+                		<div class="col-md-4">
+                			<h4>Hung Yen Office</h4>
+                			<p>
+                				Pho Noi B Industrial Zone, Lien Xa Commune,<br/>
+								Yen My Dist., Hung Yen Province<br/>
+								Tel: (84-321) 358 9122 * Fax: (84-321) 358 9121
+							</p>
+                		</div>
+                		<div class="col-md-4">
+                			<h4>Noi Bai Office</h4>
+                			<p>
+                				Shop Slot No 6, Noi Bai Industrial Zone,<br/>
+								Quang Tien, Soc Son, Ha Noi<br/>
+								Tel: (84-4) 3 582 4523 * Fax: (84-4) 3 582 0206
+							</p>
+                		</div>
+                	</div>
+                	<div class="row">
+                		<div class="col-md-4">
+                			<h4>Hai Phong Office</h4>
+                			<p>
+                				47 Luong Khanh Thien Str., Ngo Quyen Dist.,<br/>
+								Hai Phong City.<br/>
+								Tel: (84-31) 374 3599 * Fax: (84-31) 385 0309
+							</p>
+                		</div>
+                		<div class="col-md-4">
+                			<h4>Binh Duong Office</h4>
+                			<p>
+                				C14 The Oasis Village, Viet-Sing Township,<br/>
+								Thuan An District, Binh Duong Province<br/>
+								Tel: (84-650) 371 3952 * Fax: (84-650) 371 3951
+							</p>
+                		</div>
+                		<div class="col-md-4">
+                			<h4>Bien Hoa Office</h4>
+                			<p>
+                				1F, Sonadezi Building, No.1, 3A St.,<br/>
+								Bien Hoa 2 Industrial Zone, Dong Nai Province<br/>
+								Tel: (84-61) 393 2711 * Fax: (84-61) 393 2713
+							</p>
+                		</div>
+                	</div>
+                </div>
 			</xpath>
         </template>
     </data>
