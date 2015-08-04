@@ -1,0 +1,54 @@
+<openerp>
+	<data>	
+	
+		<record id="action_kderp_demo_web_office" model="ir.actions.act_window">
+			<field name="name">Office</field>
+			<field name="res_model">kderp_demo_web.office</field>
+		</record>
+		
+		<record id="kderp_demo_web_office_form" model="ir.ui.view">
+		    <field name="name">kderp_demo_web.office.form</field>
+		    <field name="model">kderp_demo_web.office</field>
+		    <field name="arch" type="xml">
+		      <form>
+		        <sheet>
+		        	<group colspan="4" col="4">
+			          	<field name="code" string="Code"/>
+			          	<field name="name"/>   
+			          	<field name="address"/>
+			          	<field name="tel"/>
+			          	<field name="fax"/>  
+		          	</group> 
+		        </sheet>
+		      </form>
+		    </field>
+		</record>
+		
+		<record id="kderp_demo_web_office_list" model="ir.ui.view" >
+            <field name="name">kderp_demo_web.office.list</field>
+            <field name="model">kderp_demo_web.office</field>
+            <field name="arch" type="xml">
+                <tree string="Blog Posts">
+		          	<field name="code"/>
+		          	<field name="name"/>   
+		          	<field name="address"/>
+		          	<field name="tel"/>
+		          	<field name="fax"/>
+                </tree>
+            </field>
+        </record>
+
+						
+		<menuitem sequence="0" id="menu_kderp_demo_web_office" name="Office"/>
+		
+		<menuitem id="menu_kderp_demo_web_content_office" 
+					parent="menu_kderp_demo_web_office"
+					name="Content Office"/>
+					
+		<menuitem id="menu_kderp_demo_web_content_office_office"
+					parent="menu_kderp_demo_web_content_office"
+					action="action_kderp_demo_web_office"/>
+	
+
+	</data>
+</openerp>
