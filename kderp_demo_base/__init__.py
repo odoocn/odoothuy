@@ -1,2 +1,2 @@
 import kderp_demo_base
-#import kderp_demo_res_currency
+import kderp_company

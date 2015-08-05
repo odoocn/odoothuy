@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+		<record id="kderp_add_config_company_form" model="ir.ui.view">
+			<field name="name">kderp.add.res.company.form.inherit</field>
+	        <field name="model">res.company</field>
+	        <field name='inherit_id' ref='base.view_company_form'/>
+	        <field name="arch" type="xml">
+				<group string="Bank Accounts" position='after'>
+					<group string="Office">
+						<field name="office_ids" mode="tree" nolabel="1" context="{'default_company_id': active_id, 'footer_hide': False}">
+							<tree editable="bottom">
+		                        <field name="code"/>
+		                     	<field name="name"/>
+		                        <field name="address"/>
+		                        <field name="tel"/>
+		                        <field name="fax"/>
+							</tree>
+	                	</field>
+					</group>
+				</group>
+			</field>
+		</record>
+		
+	</data>
+</openerp>

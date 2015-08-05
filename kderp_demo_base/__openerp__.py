@@ -9,7 +9,7 @@
     'version':"0.1",
     'depends':['base'],
     'data':['kderp_demo_base_view.xml',
-            #'kderp_demo_currency_view.xml'
+            'kderp_company_view.xml'
             ],
     'demo':[],
 }
