@@ -1,0 +1,17 @@
+<openerp><data>
+        <template id="snippets" inherit_id="website.snippets" name="Clean Theme snippets">
+            <xpath expr="//div[@id='snippet_structure']" position="inside">
+                <div class="oe_snippet_thumbnail">
+                    <img class="oe_snippet_thumbnail_img" src="/theme_Dummy/static/img/blocks/block_title.png"/>
+                    <span class="oe_snippet_thumbnail_title">SNIP it!</span>
+                </div>
+
+                <section class="oe_snippet_body fw_categories">
+                    <div class="container">
+                        <div class="row">
+                        </div>
+                    </div>
+                </section>
+            </xpath>
+        </template>
+</data></openerp>
