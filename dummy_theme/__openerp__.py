@@ -16,7 +16,7 @@
     ],
 
     # Your information
-    'author': "OPDevel",
-    'website': "www.opdevel.com",
+    'author': "IT_Kinden",
+    'website': "www.kinden.com.vn",
     'application': True,
 }
