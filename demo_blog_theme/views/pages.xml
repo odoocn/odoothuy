@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<openerp>
+	<data>    
+		<template id="website.services" inherit_id="website_blog.latest_blogs" name="Services page">
+		   	<xpath expr="//div[@id='wrap']" position='replace'>
+		   		<div id='wrap' class="title-background">
+		   			<div class="oe_structure"/>
+			            <section class="container">
+			                <div class="alert alert-warning alert-dismissable mt16" groups="base.group_website_publisher">
+			                   <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&amp;times;</button>
+			                   <p>
+			                   This page is great to improve your <strong>Search Engine Optimization</strong>;
+			                   You can review titles, keywords and descriptions of all blogs at once.
+			                   </p><p>
+			                   You should <strong>add a banner on the top</strong> as it is a frequent landing page for new visitors.
+			                   <span class="text-muted">This box will not be visible to your visitors.</span>
+			                   </p>
+			                </div>
+			                <t t-call="website.pager">
+			                    <t t-set="classname">pull-right</t>
+			                </t>
+			            </section>
+			            <section data-snippet-id="title" class="container">
+			                <div class="row">
+			                    <div class="col-md-12 text-center">
+			                        <h1>Latest Posts</h1>
+			                    </div>
+			                </div>
+			            </section>
+			            <section class="container">
+			                <div class="row">
+			                    <t t-set="count" t-value="0"/>
+			                    <t t-foreach="posts" t-as="post">
+			                      <div class="col-md-4">
+			                        <h4>
+			                            <a t-attf-href="#{blog_url('', ['blog', 'post'], blog=post.blog_id, post=post)}" t-field="post.name"/>
+			                            <span t-if="not post.website_published" class="text-warning">
+			                                &amp;nbsp;
+			                                <span class="fa fa-warning" title="Not published"/>
+			                            </span>
+			                        </h4>
+			                        <div class="text-muted">
+			                            <span class="fa fa-calendar"> <span t-field="post.create_date"/> &amp;nbsp;</span>
+			                            <span class="fa fa-folder-open"> In
+			                                <a t-attf-href="#{blog_url(blog=post.blog_id)}">
+			                                <span t-field="post.blog_id"/>
+			                                </a> &amp;nbsp;
+			                            </span>
+			                        </div>
+			                        <div class="text-muted fa fa-tags">
+			                            <span t-field="post.website_meta_keywords"/>
+			                            <span t-if="editable and not post.website_meta_keywords" class="label label-danger">
+			                                No keywords defined!
+			                            </span>
+			                        </div>
+			                        <div class="text-muted" t-if="len(post.message_ids) &gt; 0">
+			                            <span class="fa fa-comment-o">
+			                                <a t-attf-href="#{blog_url('', ['blogpost'], blogpost=post)}#comments">
+			                                    <t t-if="len(post.message_ids) &lt;= 1"><t t-esc="len(post.message_ids)"/> comment</t>
+			                                    <t t-if="len(post.message_ids) &gt; 1"><t t-esc="len(post.message_ids)"/> comments</t>
+			                                </a>
+			                            </span>
+			                        </div>
+			                        <div class="text-muted mb16" t-field="post.website_meta_description"/>
+			                      </div>
+			                      <t t-set="count" t-value="count+1"/>
+			                      <div class="clearfix" t-if="(count % 3) == 0"/>
+			                    </t>
+			                </div>
+			            </section>
+		   		</div>
+		   	</xpath>
+		</template>
+    </data>
+</openerp>
