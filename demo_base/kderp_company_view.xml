@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+		<record id="kderp_add_config_company_form" model="ir.ui.view">
+			<field name="name">kderp.add.res.company.form.inherit</field>
+	        <field name="model">res.company</field>
+	        <field name='inherit_id' ref='base.view_company_form'/>
+	        <field name="arch" type="xml">
+				<group string="Bank Accounts" position='after'>
+					<group string="Office">
+						<field name="office_ids" mode="tree" nolabel="1" context="{'default_company_id': active_id, 'footer_hide': False}">
+							<tree editable="bottom">
+		                        <field name="code"/>
+		                     	<field name="name"/>
+		                        <field name="address"/>
+		                        <field name="tel"/>
+		                        <field name="fax"/>
+							</tree>
+	                	</field>
+					</group>
+					<group string="Blog">
+						<field name="blog_ids" mode="tree" nolabel="1" context="{'default_company_id': active_id, 'footer_hide': False}">
+							<tree editable="bottom">
+								<field name="name"/>
+							</tree>
+						</field>
+					</group>
+				</group>
+			</field>
+		</record>
+		
+		<record id="inherit_blog_blog_form" model="ir.ui.view">
+			<field name="name">inherit.blog.blog.form</field>
+	        <field name="model">blog.blog</field>
+	        <field name='inherit_id' ref='website_blog.view_blog_blog_form'/>
+	        <field name="arch" type="xml">
+	        	<field name="name" position='after'>
+	        		<field name="company_id"/>
+	        	</field>
+	        </field>
+		</record>
+	</data>
+</openerp>
