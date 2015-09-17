@@ -14,7 +14,7 @@ class res_company(osv.osv):
     
     _columns={
             'office_ids': fields.one2many('kderp.demo.web.office','company_id', 'Office'),
-            'blog_ids': fields.one2many('blog.blog','company_id', 'Blog'),
+            'blog_ids': fields.one2many('blog.post','company_id', 'Blog'),
              }
     
     
@@ -32,8 +32,8 @@ class kderp_demo_web_office(osv.osv):
     }
     
 class blog_blog(osv.osv):
-    _inherit = 'blog.blog'
-    _name = 'blog.blog'
+    _inherit = 'blog.post'
+    _name = 'blog.post'
     _columns={
             'company_id': fields.many2one('res.company', string="Company"),
               }
