@@ -13,89 +13,116 @@
         <!-- web footer -->
         <template id="website_layout_extend_footer" inherit_id="website.footer_default">
 			<xpath expr="//div[@class='container hidden-print']" position="replace">
-				<div class="container hidden-print">
-					<p></p>
-            		<div class="row">
-                		<div class="col-md-5">
-                			<h4> <t t-esc="res_company.office_ids[0].name"/></h4>
-                			<p>
-                				<t t-esc="res_company.office_ids[0].address"/><br/>
-								Tel: <t t-esc="res_company.office_ids[0].tel"/> * Fax: <t t-esc="res_company.office_ids[0].tel"/>
-							</p>
-                		</div>
-                		<div class="col-md-2"/>
-                		<div class="col-md-5">
-                			<h4> <t t-esc="res_company.office_ids[5].name"/></h4>
-                			<p>
-                				<t t-esc="res_company.office_ids[5].address"/><br/>
-								Tel: <t t-esc="res_company.office_ids[5].tel"/> * Fax: <t t-esc="res_company.office_ids[5].tel"/>
-							</p>
-                		</div>
-                	</div>
-                	<p></p>
-                	<div class="row">
-                		<div class="col-md-4">
-                			<h4> <t t-esc="res_company.office_ids[1].name"/></h4>
-                			<p>
-                				<t t-esc="res_company.office_ids[1].address"/><br/>
-								Tel: <t t-esc="res_company.office_ids[1].tel"/> * Fax: <t t-esc="res_company.office_ids[1].tel"/>
-							</p>
-                		</div>
-                		<div class="col-md-4">
-                			<h4> <t t-esc="res_company.office_ids[2].name"/></h4>
-                			<p>
-                				<t t-esc="res_company.office_ids[2].address"/><br/>
-								Tel: <t t-esc="res_company.office_ids[2].tel"/> * Fax: <t t-esc="res_company.office_ids[2].tel"/>
-							</p>
-                		</div>
-                		<div class="col-md-4">
-                			<h4> <t t-esc="res_company.office_ids[3].name"/></h4>
-                			<p>
-                				<t t-esc="res_company.office_ids[3].address"/><br/>
-								Tel: <t t-esc="res_company.office_ids[3].tel"/> * Fax: <t t-esc="res_company.office_ids[3].tel"/>
-							</p>
-                		</div>
-                	</div>
-                	<div class="row">
-                		<div class="col-md-4">
-                			<h4> <t t-esc="res_company.office_ids[4].name"/></h4>
-                			<p>
-                				<t t-esc="res_company.office_ids[4].address"/><br/>
-								Tel: <t t-esc="res_company.office_ids[4].tel"/> * Fax: <t t-esc="res_company.office_ids[4].tel"/>
-							</p>
-                		</div>
-                		<div class="col-md-4">
-                			<h4> <t t-esc="res_company.office_ids[6].name"/></h4>
-                			<p>
-                				<t t-esc="res_company.office_ids[6].address"/><br/>
-								Tel: <t t-esc="res_company.office_ids[6].tel"/> * Fax: <t t-esc="res_company.office_ids[6].tel"/>
-							</p>
-                		</div>
-                		<div class="col-md-4">
-                			<h4> <t t-esc="res_company.office_ids[7].name"/></h4>
-                			<p>
-                				<t t-esc="res_company.office_ids[7].address"/><br/>
-								Tel: <t t-esc="res_company.office_ids[7].tel"/> * Fax: <t t-esc="res_company.office_ids[7].tel"/>
-							</p>
-                		</div>
-                	</div>
-                </div>
-                <p></p>
-                <div class="container" style="border-bottom: 1px solid #11A84E;">
-                	<ul class="list-inline js_language_selector mt16" t-if="(request.website_multilang and len(languages) &gt; 1) or editable">
-                        <li t-foreach="languages" t-as="lg">
-                            <a t-att-href="url_for(request.httprequest.path + '?' + keep_query(), lang=lg[0])" t-att-data-default-lang="editable and 'true' if lg[0] == website.default_lang_code else None">
-                             <t t-esc="lg[1].split('/').pop()"/></a>
-                        </li>
-                        <li groups="base.group_website_publisher">
-                            <t t-set="url_return" t-value="url_for('', '[lang]') + '?' + keep_query()"/>
-                            <a t-attf-href="/web#action=base.action_view_base_language_install&amp;website_id=#{website.id}&amp;url_return=#{url_return}">
-                            <i class="fa fa-plus-circle"/>
-                            Add a language...
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+				<div class="row">
+					<div class="col-md-9">
+						<div class="container hidden-print">
+							<p></p>
+		            		<div class="row">
+		                		<div class="col-md-5">
+		                			<h4> <t t-esc="res_company.office_ids[0].name"/></h4>
+		                			<p>
+		                				<t t-esc="res_company.office_ids[0].address"/><br/>
+										Tel: <t t-esc="res_company.office_ids[0].tel"/> * Fax: <t t-esc="res_company.office_ids[0].tel"/>
+									</p>
+		                		</div>
+		                		<div class="col-md-2"/>
+		                		<div class="col-md-5">
+		                			<h4> <t t-esc="res_company.office_ids[5].name"/></h4>
+		                			<p>
+		                				<t t-esc="res_company.office_ids[5].address"/><br/>
+										Tel: <t t-esc="res_company.office_ids[5].tel"/> * Fax: <t t-esc="res_company.office_ids[5].tel"/>
+									</p>
+		                		</div>
+		                	</div>
+		                	<p></p>
+		                	<div class="row">
+		                		<div class="col-md-4">
+		                			<h4> <t t-esc="res_company.office_ids[1].name"/></h4>
+		                			<p>
+		                				<t t-esc="res_company.office_ids[1].address"/><br/>
+										Tel: <t t-esc="res_company.office_ids[1].tel"/> * Fax: <t t-esc="res_company.office_ids[1].tel"/>
+									</p>
+		                		</div>
+		                		<div class="col-md-4">
+		                			<h4> <t t-esc="res_company.office_ids[2].name"/></h4>
+		                			<p>
+		                				<t t-esc="res_company.office_ids[2].address"/><br/>
+										Tel: <t t-esc="res_company.office_ids[2].tel"/> * Fax: <t t-esc="res_company.office_ids[2].tel"/>
+									</p>
+		                		</div>
+		                		<div class="col-md-4">
+		                			<h4> <t t-esc="res_company.office_ids[3].name"/></h4>
+		                			<p>
+		                				<t t-esc="res_company.office_ids[3].address"/><br/>
+										Tel: <t t-esc="res_company.office_ids[3].tel"/> * Fax: <t t-esc="res_company.office_ids[3].tel"/>
+									</p>
+		                		</div>
+		                	</div>
+		                	<div class="row">
+		                		<div class="col-md-4">
+		                			<h4> <t t-esc="res_company.office_ids[4].name"/></h4>
+		                			<p>
+		                				<t t-esc="res_company.office_ids[4].address"/><br/>
+										Tel: <t t-esc="res_company.office_ids[4].tel"/> * Fax: <t t-esc="res_company.office_ids[4].tel"/>
+									</p>
+		                		</div>
+		                		<div class="col-md-4">
+		                			<h4> <t t-esc="res_company.office_ids[6].name"/></h4>
+		                			<p>
+		                				<t t-esc="res_company.office_ids[6].address"/><br/>
+										Tel: <t t-esc="res_company.office_ids[6].tel"/> * Fax: <t t-esc="res_company.office_ids[6].tel"/>
+									</p>
+		                		</div>
+		                		<div class="col-md-4">
+		                			<h4> <t t-esc="res_company.office_ids[7].name"/></h4>
+		                			<p>
+		                				<t t-esc="res_company.office_ids[7].address"/><br/>
+										Tel: <t t-esc="res_company.office_ids[7].tel"/> * Fax: <t t-esc="res_company.office_ids[7].tel"/>
+									</p>
+		                		</div>
+		                	</div>
+		                </div>
+		                <p></p>
+		                <div class="container" style="border-bottom: 1px solid #11A84E;">
+		                	<ul class="list-inline js_language_selector mt16" t-if="(request.website_multilang and len(languages) &gt; 1) or editable">
+		                        <li t-foreach="languages" t-as="lg">
+		                            <a t-att-href="url_for(request.httprequest.path + '?' + keep_query(), lang=lg[0])" t-att-data-default-lang="editable and 'true' if lg[0] == website.default_lang_code else None">
+		                             <t t-esc="lg[1].split('/').pop()"/></a>
+		                        </li>
+		                        <li groups="base.group_website_publisher">
+		                            <t t-set="url_return" t-value="url_for('', '[lang]') + '?' + keep_query()"/>
+		                            <a t-attf-href="/web#action=base.action_view_base_language_install&amp;website_id=#{website.id}&amp;url_return=#{url_return}">
+		                            <i class="fa fa-plus-circle"/>
+		                            Add a language...
+		                            </a>
+		                        </li>
+		                    </ul>
+		                </div>
+		        	</div>
+		        	<div class="col-md-3">
+		        		<form action="/crm/contactus" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
+				            <div t-attf-class="form-group #{error and 'contact_name' in error and 'has-error' or ''}">
+				            	<input type="text" class="form-control" placeholder="Your Name" name="contact_name" required="True" t-attf-value="#{contact_name or ''}"/>
+				            </div>
+				            <div t-attf-class="form-group #{error and 'phone' in error and 'has-error' or ''}">						                
+				            	<input type="text" class="form-control" placeholder="Phone Number" name="phone" t-attf-value="#{phone or ''}"/>
+				            </div>
+				            <div name="email_from_container" t-attf-class="form-group #{error and 'email_from' in error and 'has-error' or ''}">						            
+				               <input type="email" class="form-control" placeholder="Email" name="email_from" required="True" t-attf-value="#{email_from or ''}"/>						               
+				            </div>
+				            <div t-attf-class="form-group #{error and 'name' in error and 'has-error' or ''}">
+				               <input type="text" class="form-control" placeholder="Subject" name="name" t-attf-value="#{name or ''}"/>
+				            </div>
+				            <div t-attf-class="form-group #{error and 'description' in error and 'has-error' or ''}">
+				                <textarea  class="form-control" placeholder="Your Question"  name="description" style="min-height: 120px" required="True"><t t-esc="description or ''"/></textarea>
+				            </div>
+				            <div class="form-group pull-left">
+				                <button class="btn btn-primary btn-lg">Send</button>
+				            </div>
+				        </form>  
+		        	</div>
+	            </div>
+	            
                 <p></p>     
 			</xpath>
         </template>
