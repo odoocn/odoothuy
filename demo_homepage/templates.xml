@@ -1,0 +1,103 @@
+<openerp>
+    <data>
+    	<!-- web main -->
+		<template id="contact" inherit_id="website.homepage">
+		    <xpath expr="//div[@id='wrap']" position="inside">
+		        <div class="container hidden-print">
+					<t t-foreach="res_company.blog_ids" t-as="i">
+					    <p><t t-esc="i.name"/></p>
+					</t>
+				</div>
+		    </xpath>
+		</template>
+        <!-- web footer -->
+        <template id="website_layout_extend_footer" inherit_id="website.footer_default">
+			<xpath expr="//div[@class='container hidden-print']" position="replace">
+				<div class="container hidden-print">
+					<p></p>
+            		<div class="row">
+                		<div class="col-md-5">
+                			<h4> <t t-esc="res_company.office_ids[0].name"/></h4>
+                			<p>
+                				<t t-esc="res_company.office_ids[0].address"/><br/>
+								Tel: <t t-esc="res_company.office_ids[0].tel"/> * Fax: <t t-esc="res_company.office_ids[0].tel"/>
+							</p>
+                		</div>
+                		<div class="col-md-2"/>
+                		<div class="col-md-5">
+                			<h4> <t t-esc="res_company.office_ids[5].name"/></h4>
+                			<p>
+                				<t t-esc="res_company.office_ids[5].address"/><br/>
+								Tel: <t t-esc="res_company.office_ids[5].tel"/> * Fax: <t t-esc="res_company.office_ids[5].tel"/>
+							</p>
+                		</div>
+                	</div>
+                	<p></p>
+                	<div class="row">
+                		<div class="col-md-4">
+                			<h4> <t t-esc="res_company.office_ids[1].name"/></h4>
+                			<p>
+                				<t t-esc="res_company.office_ids[1].address"/><br/>
+								Tel: <t t-esc="res_company.office_ids[1].tel"/> * Fax: <t t-esc="res_company.office_ids[1].tel"/>
+							</p>
+                		</div>
+                		<div class="col-md-4">
+                			<h4> <t t-esc="res_company.office_ids[2].name"/></h4>
+                			<p>
+                				<t t-esc="res_company.office_ids[2].address"/><br/>
+								Tel: <t t-esc="res_company.office_ids[2].tel"/> * Fax: <t t-esc="res_company.office_ids[2].tel"/>
+							</p>
+                		</div>
+                		<div class="col-md-4">
+                			<h4> <t t-esc="res_company.office_ids[3].name"/></h4>
+                			<p>
+                				<t t-esc="res_company.office_ids[3].address"/><br/>
+								Tel: <t t-esc="res_company.office_ids[3].tel"/> * Fax: <t t-esc="res_company.office_ids[3].tel"/>
+							</p>
+                		</div>
+                	</div>
+                	<div class="row">
+                		<div class="col-md-4">
+                			<h4> <t t-esc="res_company.office_ids[4].name"/></h4>
+                			<p>
+                				<t t-esc="res_company.office_ids[4].address"/><br/>
+								Tel: <t t-esc="res_company.office_ids[4].tel"/> * Fax: <t t-esc="res_company.office_ids[4].tel"/>
+							</p>
+                		</div>
+                		<div class="col-md-4">
+                			<h4> <t t-esc="res_company.office_ids[6].name"/></h4>
+                			<p>
+                				<t t-esc="res_company.office_ids[6].address"/><br/>
+								Tel: <t t-esc="res_company.office_ids[6].tel"/> * Fax: <t t-esc="res_company.office_ids[6].tel"/>
+							</p>
+                		</div>
+                		<div class="col-md-4">
+                			<h4> <t t-esc="res_company.office_ids[7].name"/></h4>
+                			<p>
+                				<t t-esc="res_company.office_ids[7].address"/><br/>
+								Tel: <t t-esc="res_company.office_ids[7].tel"/> * Fax: <t t-esc="res_company.office_ids[7].tel"/>
+							</p>
+                		</div>
+                	</div>
+                </div>
+                <p></p>
+                <div class="container" style="border-bottom: 1px solid #11A84E;">
+                	<ul class="list-inline js_language_selector mt16" t-if="(request.website_multilang and len(languages) &gt; 1) or editable">
+                        <li t-foreach="languages" t-as="lg">
+                            <a t-att-href="url_for(request.httprequest.path + '?' + keep_query(), lang=lg[0])" t-att-data-default-lang="editable and 'true' if lg[0] == website.default_lang_code else None">
+                             <t t-esc="lg[1].split('/').pop()"/></a>
+                        </li>
+                        <li groups="base.group_website_publisher">
+                            <t t-set="url_return" t-value="url_for('', '[lang]') + '?' + keep_query()"/>
+                            <a t-attf-href="/web#action=base.action_view_base_language_install&amp;website_id=#{website.id}&amp;url_return=#{url_return}">
+                            <i class="fa fa-plus-circle"/>
+                            Add a language...
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <p></p>     
+			</xpath>
+        </template>
+    </data>
+</openerp>

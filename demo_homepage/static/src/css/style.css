@@ -1,0 +1,14 @@
+/*Sua lai header*/
+.navbar-default {
+    background-color: #FFF;
+}
+.navbar-default .container{
+	background-image: url(https://dl.dropboxusercontent.com/u/100360973/barner/header-bg.png);	
+}
+.navbar-header{
+	float: left;
+	margin: 20px 0px 20px 0px;
+}
+.navbar-default .container .navbar-collapse {
+	margin: 20px 0px 0px 0px;
+}
