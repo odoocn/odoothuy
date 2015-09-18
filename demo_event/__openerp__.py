@@ -10,7 +10,7 @@
     'category': 'Demo Events',
     'version': '0.1',
     # any module necessary for this one to work correctly
-    'depends': ['demo_base', 'website_event'],
+    'depends': ['website_event'],
     # always loaded
     'data': [ 
              'templates.xml',
