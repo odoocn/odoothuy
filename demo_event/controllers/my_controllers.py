@@ -32,7 +32,8 @@ class website_event(http.Controller):
             return date.strftime(tools.DEFAULT_SERVER_DATETIME_FORMAT)
         today = datetime.today()
         dates = [
-            ['all', _('Next Events'), [], 0],
+            ['all', _('All Events'), [], 0],
+            ['nextevents', _('Next Events'), [("date_end", ">", sd(today))], 0],
             ['today', _('Today'), [
                 ("date_end", ">", sd(today)),
                 ("date_begin", "<", sdn(today))],
