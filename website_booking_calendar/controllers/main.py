@@ -6,7 +6,7 @@ class website_booking_calendar(http.Controller):
 
     def _get_resources(self, params):
         cr, uid, context = request.cr, request.uid, request.context
-        resource_obj = request.registry['event.event']
+        resource_obj = request.registry['event.type']
         domain=[]
         resource_ids = resource_obj.search(cr, SUPERUSER_ID, domain, context=context)
         resources = resource_obj.browse(cr, SUPERUSER_ID, resource_ids, context=context)
