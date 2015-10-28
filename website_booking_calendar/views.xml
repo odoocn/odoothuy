@@ -51,12 +51,14 @@
         <!-- Public page -->
         <template id="index" name="Booking Calendar Public">
             <t t-call="website.layout">
-                <div id="wrap">
-                    <div id="cal_wrap">
-                        <div id='external-events'>
-                            <t t-call="website_booking_calendar.resources"/>
-                        </div>
-                        <t t-call="website_booking_calendar.calendar"/>
+            	<div class="container">
+            		<div class="row">
+            		<p></p>
+                    <div id='external-events'>
+                        <t t-call="website_booking_calendar.resources"/>
+                    </div>
+                    <t t-call="website_booking_calendar.calendar"/>
+                    <p></p>
                     </div>
                 </div>
             </t>
