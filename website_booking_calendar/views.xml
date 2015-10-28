@@ -2,9 +2,9 @@
 <openerp>
     <data>
         <template id="resources">
-            <h4>Book resources</h4>
+            <h4>Book Type</h4>
             <t t-foreach="resources" t-as="r">
-                <div class='fc-event' t-att-data-resource="r.id"><t t-esc="r.name"/></div>
+                <div class='fc-event' t-att-data-resource="r.id"><t t-esc="r.type.name"/></div>
             </t>
         </template>
         <template id="assets">

@@ -1,5 +1,7 @@
 from openerp import api, models, fields, SUPERUSER_ID
 from openerp.exceptions import ValidationError
+from datetime import datetime, timedelta
+from openerp import tools
     
 class event_event(models.Model):
     _inherit = 'event.event'    
@@ -35,9 +37,9 @@ class event_event(models.Model):
         bookings = self.search(domain)
         return [{
             'id': b.id,
-            'title': b.type.name,
-            'start': b.date_begin,
-            'end': b.date_end,
+            'title': str((datetime.strptime(b.date_begin, tools.DEFAULT_SERVER_DATETIME_FORMAT) + timedelta(hours=7)).strftime('%I:%M %p'))+', '+b.name+', '+b.type.name,
+            'start': str(datetime.strptime(b.date_begin, tools.DEFAULT_SERVER_DATETIME_FORMAT) + timedelta(hours=7)),
+            'end': str(datetime.strptime(b.date_end, tools.DEFAULT_SERVER_DATETIME_FORMAT) + timedelta(hours=7)),
             'editable': False,
         } for b in bookings]
 
