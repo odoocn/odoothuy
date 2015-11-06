@@ -2,18 +2,19 @@
 <openerp>
 	<data>
 	    <!-- === Services Page === -->
-	    <template name="Services page" id="website.services" page="True">
+	   <!--  <template name="Services page" id="website.services" page="True"> -->
+	    <template name="Services page" id="website.thuydemo" page="True">
 		    <t t-call="website.layout">
 			    <div id="wrap">
 				    <div class="container">
-				    	<h1>Our Services</h1>
-				        <ul class="services">
+				    	<h1>Thuy Demo</h1>
+				        <!-- <ul class="services">
 					    	<li>Cloud Hosting</li>
 					        <li>Support</li>
 					        <li>Unlimited space</li>
-				        </ul>
+				        </ul> -->
 				        <!-- === Snippets' area === -->
-			       		<div class="oe_structure" />
+			       		<!-- <div class="oe_structure" /> -->
 		       			<t t-foreach="website.menu_id.child_id" t-as="submenu">
                            	<p><t t-esc="submenu.name"/></p>
                             <t t-esc="submenu_all"/>
