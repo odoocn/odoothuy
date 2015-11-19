@@ -3,7 +3,10 @@
     'name': "KDVN Website",
     'summary': """KINDEN VIETNAM Web site""",
     'description': """
-                    A web site for KINDEN VIETNAM
+                    Providing means for customize KDVN Website
+                    - Maximizing feeding information automatically
+                    - Adding configurations for the website
+                    - Providing basic theme
                     Providing General information, News, QA section
                     And a kind of portal to employees
                     """,
@@ -11,11 +14,13 @@
     'website': "http://www.kinden.jp.co",
     'category': "Test",
     'version': "0.1",
-    'depends': ['website'],
+    'depends': ['web', 'website', 'website_partner', 'website_blog'],
     'data': [
-             'views/website_templates.xml',
-             ],
-    'demo': [
-             'demo.xml',
-             ],
+             'security/security.xml',
+             'security/ir.model.access.csv',
+             'data/data.xml',
+             'views/inherited_kderp_website_views.xml',
+             'views/kderp_website_about.xml',
+             'views/kderp_website_views.xml',
+             ]
 }

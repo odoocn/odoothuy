@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<openerp>
+	<data>
+		<template id="show_post_style" name="Show Post Style" inherit_id="website.assets_frontend">
+		    <xpath expr="link[last()]" position="after">
+		        <link href="/kderp_website_theme_default_show_post/static/src/css/kdvn_website.css" rel="stylesheet"/>
+		    </xpath>
+		</template>
+	</data>
+</openerp>

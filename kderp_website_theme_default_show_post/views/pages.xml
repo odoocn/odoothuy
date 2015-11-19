@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<openerp>
+	<data>
+	    <!-- === Show Post === -->
+	    <template id="kderp_website_theme_default_show_post.show_post" name="KDVN Show Post" inherit_id="kderp_website.show_post">
+    	<xpath expr="//div[@class='container']" position="replace">
+    		<div class="container show-post">
+    			<div class="blog-header">
+			        <h2 class="blog-title h2-show-post"><t t-raw="post.name.title()"></t></h2>
+			        <p class="blog-post-meta"><span t-field="post.create_date" t-field-options='{"format":"MMM dd, y"}'></span><span> by </span><a href="#"><t t-esc="post.author_id.name"></t></a></p>
+			    </div>
+	    		<div class="row">
+	        		<div class="col-sm-8 blog-main">
+			    		<div class="blog-post">
+							<t t-if="post.summary">
+								<p><t t-esc="post.summary"></t></p><hr/>
+							</t>
+				            <t t-if="not(post.summary)"/>
+							<t t-if="post.img_url_ids">
+								<div class="bs-callout bs-callout-warning" style="border-left-width: 2px;">
+									<h4><span class="fa fa-paperclip"></span></h4>
+									<t t-if="post.img_url_ids">
+										<div class="row">
+											<t t-foreach="post.img_url_ids" t-as="file">
+												<div class="col-md-6" t-attf-id="{{file_index % 2}}">
+												<a t-if="file.name[-4:] == '.pdf'" t-attf-href="{{file.website_url}}/{{file.name}}" target="_blank"><t t-esc="file.name"></t></a>
+												<a t-if="not(file.name[-4:] == '.pdf')" t-attf-href="{{file.website_url}}/{{file.name}}" t-att-download="file.name"><t t-esc="file.name"></t></a>
+												</div>
+											</t>
+										</div>
+									</t>
+								</div>
+							</t>
+				           	<div>
+								<div t-field="post.content"></div>
+							</div>
+				   		</div><!-- /.blog-post -->
+				   	</div><!-- .blog-main -->
+				   	<div class="col-sm-3 col-sm-offset-1 hidden-xs hidden-sm">
+				   		<div class="panel panel-default">
+							<div class="panel-heading">
+								<h3 class="panel-title">Event</h3>
+							</div>
+							<div class="panel-body" style="padding-top: 0px">
+								<div class="text-center text-muted" t-if="not events">
+				                	<h3>No event found</h3>
+				                    <t groups="base.group_website_publisher">
+				                        <p groups="event.group_event_manager">Use the top menu <i>'Content'</i> to create your first event.</p>
+				                    </t>
+				               	</div>
+			                   	<ul class="media-list">
+			                       <li t-foreach="events" t-as="event" class="media" style="margin-top: 0px;">
+			                       		<table class="table" style="margin-bottom: 0px;">
+											<tbody>
+												<tr>
+												<td>	
+													<div itemscope="itemscope" itemtype="http://schema.org/Event" class="media-body">
+						                               <h5 class="media-heading">
+						                                   <a itemprop="url" t-att-class="event.state == 'done' and 'text-success'" t-attf-href="/event/#{ slug(event) }/#{(not event.menu_id) and 'register' or ''}"><span itemprop="name" t-field="event.name"> </span></a>
+						                                   <small t-if="not event.address_id" class="label label-info">Online</small>
+						                                	<small t-if="not event.website_published" class="label label-danger">not published</small>
+						                               </h5>
+						                               <h6>
+							                               <div>
+							                                   <t t-if="event.organizer_id">
+							                                       Organized by: <span t-field="event.organizer_id"> </span>
+							                                   </t>
+							                               </div>
+							                               <div>
+							                                   <i class="fa fa-clock-o"></i> <span itemprop="startDate" t-field="event.date_begin" t-field-options='{"hide_seconds":"True"}'> </span> <i>to</i> <span itemprop="endDate" t-field="event.date_end" t-field-options='{"hide_seconds":"True"}'> </span>
+							                               </div>
+							                               <div itemprop="location" t-field="event.address_id" t-field-options='{
+							                                   "widget": "contact",
+							                                   "fields": ["city"]
+							                                   }'/>
+							                               <div class="text-muted" t-if="event.type">
+							                                   <i class="fa fa-tag"></i> <span t-field="event.type"/>
+							                               </div>
+						                               </h6>
+						                           </div>
+						                        </td>
+												</tr>
+											</tbody>
+										</table>
+			                       </li>
+			                   	</ul>
+							</div>
+						</div>
+						<p class="text-right"><a href="/event" alt="More news">More Events...</a></p>
+		        	</div>
+				</div><!-- .row -->
+	    	</div><!-- .container -->
+		</xpath>
+	</template>
+		
+    </data>
+</openerp>
